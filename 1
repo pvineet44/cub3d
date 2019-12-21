@@ -6,7 +6,7 @@
 /*   By: vparekh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/21 16:23:43 by vparekh           #+#    #+#             */
-/*   Updated: 2019/12/21 18:29:47 by vparekh          ###   ########.fr       */
+/*   Updated: 2019/12/21 18:28:49 by vparekh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,6 @@ t_prop_data			set_prop_data(t_prop_data prop_data, char *line)
 			i++;
 		prop_data.h_resolution = ft_atoi(&line[i]);
 		i++;
-		while (ft_isdigit(line[i]))
-			i++;
 		while (ft_isspace(line[i]))
 			i++;
 		prop_data.v_resolution = ft_atoi(&line[i]);
