@@ -213,15 +213,15 @@ int main(int argc, const char *argv[])
 	{
 		prop_data = set_prop_data(prop_data, line);
 	}
-	printf("h : %d\n", prop_data.h_resolution);
-	printf("v : %d\n", prop_data.v_resolution);
-	printf("NO: %s\n", prop_data.no_texture);
-	printf("SO: %s\n", prop_data.so_texture);
-	printf("EA: %s\n", prop_data.ea_texture);
-	printf("WE: %s\n", prop_data.we_texture);
-	printf("S: %s\n", prop_data.sprite_texture);
-	printf("F: %d,%d,%d\n", prop_data.f_red, prop_data.f_green, prop_data.f_blue);
-	printf("C: %d,%d,%d\n", prop_data.c_red, prop_data.c_green, prop_data.c_blue);
+	// printf("h : %d\n", prop_data.h_resolution);
+	// printf("v : %d\n", prop_data.v_resolution);
+	// printf("NO: %s\n", prop_data.no_texture);
+	// printf("SO: %s\n", prop_data.so_texture);
+	// printf("EA: %s\n", prop_data.ea_texture);
+	// printf("WE: %s\n", prop_data.we_texture);
+	// printf("S: %s\n", prop_data.sprite_texture);
+	// printf("F: %d,%d,%d\n", prop_data.f_red, prop_data.f_green, prop_data.f_blue);
+	// printf("C: %d,%d,%d\n", prop_data.c_red, prop_data.c_green, prop_data.c_blue);
 	while(j < prop_data.map_height)
 	{
 		i = 0;
