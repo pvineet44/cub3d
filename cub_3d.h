@@ -28,6 +28,9 @@ typedef			struct			s_prop_data
 	char	*so_texture;
 	char	*ea_texture;
 	char	*sprite_texture;
+	char	map[100][100];
+	int		map_height;
+	int		map_width;
 }								t_prop_data;
 
 # include <fcntl.h>
