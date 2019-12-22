@@ -221,7 +221,7 @@ int main(int argc, const char *argv[])
 	// printf("WE: %s\n", prop_data.we_texture);
 	// printf("S: %s\n", prop_data.sprite_texture);
 	// printf("F: %d,%d,%d\n", prop_data.f_red, prop_data.f_green, prop_data.f_blue);
-	// printf("C: %d,%d,%d\n", prop_data.c_red, prop_data.c_green, prop_data.c_blue);
+	 printf("C: %d,%d,%d\n", prop_data.c_red, prop_data.c_green, prop_data.c_blue);
 	while(j < prop_data.map_height)
 	{
 		i = 0;
