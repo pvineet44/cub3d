@@ -26,7 +26,6 @@ t_prop_data			parse_resolution(t_prop_data prop_data, char *line)
 	while (ft_isspace(line[i]))
 		i++;
 	prop_data.v_resolution = ft_atoi(&line[i]);
-	//ft_free_str(line);
 	return (prop_data);
 }
 
@@ -50,7 +49,6 @@ t_prop_data			parse_texture(t_prop_data prop_data, char c, char *line)
 		prop_data.we_texture = ft_strdup(tmp);
 	else if (c == 'P')
 		prop_data.sprite_texture = ft_strdup(tmp);
-	// ft_free_str(line);
 	return (prop_data);
 }
 
@@ -68,7 +66,6 @@ t_prop_data			parse_floor(t_prop_data prop_data, char *line)
 		i++;
 	i++;
 	prop_data.f_blue = ft_atoi(&line[i]);
-	// ft_free_str(line);
 	return (prop_data);
 }
 
@@ -86,7 +83,6 @@ t_prop_data			parse_ceil(t_prop_data prop_data, char *line)
 		i++;
 	i++;
 	prop_data.c_blue = ft_atoi(&line[i]);
-	//ft_free_str(line);
 	return (prop_data);
 }
 
@@ -113,6 +109,5 @@ t_prop_data			parse_map(t_prop_data prop_data, char *line)
 	if (prop_data.map_width == 0)
 		prop_data.map_width = i;
 	prop_data.map_height++;
-	//ft_free_str(line);
 	return (prop_data);
 }
