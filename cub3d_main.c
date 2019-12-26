@@ -60,6 +60,7 @@ int 				validate_map(t_prop_data prop_data)
 	}
 	return (1);
 }
+
 void				invoke_error(t_prop_data prop_data, char sig)
 {
 	if (sig == 'M')
@@ -89,6 +90,7 @@ t_prop_data			set_prop_data(t_prop_data prop_data, char *line)
 		prop_data = parse_map(prop_data, &line[0]);
 	else
 		invoke_error(prop_data, 'A');
+	ft_free_str(line);
 	return (prop_data);
 }
 
@@ -136,5 +138,6 @@ int main(int argc, const char *argv[])
 		write(1, "\n", 1);
 		j++;
 	}
+	//while (1);
 	return 0;
 }

@@ -46,5 +46,6 @@ void				ft_putstr(char *str);
 int					ft_isspace(char c);
 int					ft_isdigit(char c);
 int					ft_atoi(char *str);
+int					ft_free_str(char *str);
 
 #endif
