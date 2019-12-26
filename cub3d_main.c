@@ -6,13 +6,11 @@
 /*   By: vparekh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/21 16:23:43 by vparekh           #+#    #+#             */
-/*   Updated: 2019/12/21 18:56:59 by vparekh          ###   ########.fr       */
+/*   Updated: 2019/12/23 09:42:17 by vparekh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub_3d.h"
-#include "get_next_line.h"
-#include <stdio.h>
+#include "cub3d.h"
 
 t_prop_data		init_prop_data(t_prop_data prop_data)
 {
@@ -34,149 +32,47 @@ t_prop_data		init_prop_data(t_prop_data prop_data)
 	return (prop_data);
 }
 
-
-int			ft_isspace(char c)
+int 				validate_map(t_prop_data prop_data)
 {
-	if (c == ' ')
-		return (1);
-	return (0);
-}
-
-int				ft_isdigit(char c)
-{
-	if (c >= '0' && c <= '9')
-		return (1);
-	return (0);
-}
-
-int				ft_atoi(char *str)
-{
-	int val;
-	int neg;
 	int i;
+	int k;
 
-	i = 0;
-	val = 0;
-	neg = 1;
-	if (str[0] == '-')
-		neg = -1;
-	if (str[i] == '-' || str[i] == '+')
-		i++;
-	while (str &&str[i] && ft_isdigit(str[i]))
+	k = 0;
+	i = -1;
+	while (++i < prop_data.map_width)
 	{
-		val = val * 10 + (str[i] - '0');
-		i++;
+		if (prop_data.map[i][0] != '1')
+			return (0);
+
 	}
-	return (val * neg);
+	k = prop_data.map_height - 1;
+	i = -1;
+	while (++i < prop_data.map_width)
+	{
+		if (prop_data.map[i][k]!= '1' || prop_data.map[i][k]!= '1')
+			return (0);
+	}
+	i = -1;
+	while (++i < prop_data.map_height)
+	{
+		if (prop_data.map[0][i]!= '1' || prop_data.map[prop_data.map_width - 1][i]!= '1')
+			return (0);
+	}
+	return (1);
 }
-
-t_prop_data			parse_resolution(t_prop_data prop_data, char *line)
+void				invoke_error(t_prop_data prop_data, char sig)
 {
-	int i;
-
-	i = 0;
-	while (ft_isspace(line[i]))
-		i++;
-	prop_data.h_resolution = ft_atoi(&line[i]);
-	i++;
-	while (ft_isdigit(line[i]))
-		i++;
-	while (ft_isspace(line[i]))
-		i++;
-	prop_data.v_resolution = ft_atoi(&line[i]);
-	return (prop_data);
-}
-
-t_prop_data			parse_texture(t_prop_data prop_data, char c, char *line)
-{
-	int i;
-	char *tmp;
-
-	i = 0;
-	tmp = NULL;
-	while (ft_isspace(line[i]))
-		i++;
-	tmp = &line[i];
-	if (c == 'N')
-		prop_data.no_texture = ft_strdup(tmp);
-	else if (c == 'S')
-		prop_data.so_texture = ft_strdup(tmp);
-	else if (c == 'E')
-		prop_data.ea_texture = ft_strdup(tmp);
-	else if (c == 'W')
-		prop_data.we_texture = ft_strdup(tmp);
-	else if (c == 'P')
-		prop_data.sprite_texture = ft_strdup(tmp);
-	return (prop_data);
-}
-
-t_prop_data			parse_floor(t_prop_data prop_data, char *line)
-{
-	int i;
-
-	i = 0;
-	prop_data.f_red = ft_atoi(&line[i]);
-	while(line[i] != ',')
-		i++;
-	i++;
-	prop_data.f_green = ft_atoi(&line[i]);
-	while(line[i] != ',')
-		i++;
-	i++;
-	prop_data.f_blue = ft_atoi(&line[i]);
-	return (prop_data);
-}
-
-t_prop_data			parse_ceil(t_prop_data prop_data, char *line)
-{
-	int i;
-
-	i = 0;
-	prop_data.c_red = ft_atoi(&line[i]);
-	while(line[i] != ',')
-		i++;
-	i++;
-	prop_data.c_green = ft_atoi(&line[i]);
-	while(line[i] != ',')
-		i++;
-	i++;
-	prop_data.c_blue = ft_atoi(&line[i]);
-	return (prop_data);
-}
-t_prop_data			parse_map(t_prop_data prop_data, char *line)
-{
-		int j;
-		int i;
-		int k;
-
-		k = 0;
-		i = 0;
-		j = prop_data.map_height;
-		//printf("%d\n", j);
-		if (prop_data.map_width == 0)
-			prop_data.map_width = (ft_strlen(line)/2) + 1;
-		while (line && line[k])
-		{
-			if (ft_isspace(line[k]))
-			{
-				k++;
-				continue;
-			}
-			prop_data.map[i][j] = line[k];
-			//printf("%c",prop_data.map[i][j]);
-			i++;
-			k++;
-		}
-		//printf("\n");
-		prop_data.map_height++;
-		return (prop_data);
+	if (sig == 'M')
+		ft_putstr("Map Error: Please check the map.\n");
+	if (sig == 'A')
+		ft_putstr("Argument Error: Please enter valid arguements.\n");
+	exit(0);
 }
 
 t_prop_data			set_prop_data(t_prop_data prop_data, char *line)
 {
-	int i;
-
-	i = 1;
+	if (line[0] == '\0')
+		return (prop_data);
 	if (line[0] == 'R')
 		prop_data = parse_resolution(prop_data, &line[1]);
 	else if(line[0] == 'N' || (line[0] == 'S' && line[1] == 'O'))
@@ -189,10 +85,10 @@ t_prop_data			set_prop_data(t_prop_data prop_data, char *line)
 		prop_data = parse_floor(prop_data, &line[2]);
 	else if (line[0] == 'C')
 		prop_data = parse_ceil(prop_data, &line[2]);
-	else if (line[0] == '1')
+	else if (ft_isdigit(line[0]))
 		prop_data = parse_map(prop_data, &line[0]);
 	else
-		write(1, "Argument Error: Please enter valid arguements.\n", 47);
+		invoke_error(prop_data, 'A');
 	return (prop_data);
 }
 
@@ -201,7 +97,10 @@ int main(int argc, const char *argv[])
 	int fd;
 	int i;
 	int j;
-	i = 0;
+	int x;
+
+	x = 0;
+	i = -1;
 	j = 0;
 	t_prop_data prop_data;
 	char *line;
@@ -213,6 +112,9 @@ int main(int argc, const char *argv[])
 	{
 		prop_data = set_prop_data(prop_data, line);
 	}
+	x = validate_map(prop_data);
+	if (x == 0)
+		invoke_error(prop_data, 'M');
 	// printf("h : %d\n", prop_data.h_resolution);
 	// printf("v : %d\n", prop_data.v_resolution);
 	// printf("NO: %s\n", prop_data.no_texture);
@@ -221,16 +123,17 @@ int main(int argc, const char *argv[])
 	// printf("WE: %s\n", prop_data.we_texture);
 	// printf("S: %s\n", prop_data.sprite_texture);
 	// printf("F: %d,%d,%d\n", prop_data.f_red, prop_data.f_green, prop_data.f_blue);
-	 printf("C: %d,%d,%d\n", prop_data.c_red, prop_data.c_green, prop_data.c_blue);
+	//  printf("C: %d,%d,%d\n", prop_data.c_red, prop_data.c_green, prop_data.c_blue);
 	while(j < prop_data.map_height)
 	{
 		i = 0;
 		while (i < prop_data.map_width)
 		{
-			printf("%c", prop_data.map[i][j]);
+			write(1, &prop_data.map[i][j], 1);
+			//printf("%c", prop_data.map[i][j]);
 			i++;
 		}
-		printf("\n");
+		write(1, "\n", 1);
 		j++;
 	}
 	return 0;
