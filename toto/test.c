@@ -14,6 +14,8 @@
 
 #include "mlx.h"
 
+
+
 int main(int argc, char const *argv[])
 {
 	void *mlx;
@@ -86,8 +88,6 @@ int main(int argc, char const *argv[])
 			i = i + 4;
 	}
 	mlx_put_image_to_window(mlx, win, img2, 400,400);
-	mlx_clear_window(mlx, win);
-	mlx_destroy_window(mlx, win);
 	mlx_loop(mlx);
 	return 0;
 }
