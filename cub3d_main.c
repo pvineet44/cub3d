@@ -32,29 +32,29 @@ t_prop_data		init_prop_data(t_prop_data prop_data)
 	return (prop_data);
 }
 
-int				validate_map(t_prop_data prop_data)
+int				validate_map(t_prop_data *prop_data)
 {
 	int i;
 	int k;
 
 	i = -1;
-	while (++i < prop_data.map_width)
+	while (++i < prop_data->map_width)
 	{
-		if (prop_data.map[i][0] != '1')
+		if (prop_data->map[i][0] != '1')
 			return (0);
 	}
-	k = prop_data.map_height - 1;
+	k = prop_data->map_height - 1;
 	i = -1;
-	while (++i < prop_data.map_width)
+	while (++i < prop_data->map_width)
 	{
-		if (prop_data.map[i][k] != '1' || prop_data.map[i][k] != '1')
+		if (prop_data->map[i][k] != '1' || prop_data->map[i][k] != '1')
 			return (0);
 	}
 	i = -1;
-	while (++i < prop_data.map_height)
+	while (++i < prop_data->map_height)
 	{
-		if (prop_data.map[0][i] != '1' ||\
-		prop_data.map[prop_data.map_width - 1][i] != '1')
+		if (prop_data->map[0][i] != '1' ||\
+		prop_data->map[prop_data->map_width - 1][i] != '1')
 			return (0);
 	}
 	return (1);
@@ -74,19 +74,19 @@ t_prop_data		set_prop_data(t_prop_data prop_data, char *line)
 	if (line[0] == '\0')
 		return (prop_data);
 	if (line[0] == 'R')
-		prop_data = parse_resolution(prop_data, &line[1]);
+		prop_data = parse_resolution(&prop_data, &line[1]);
 	else if (line[0] == 'N' || (line[0] == 'S' && line[1] == 'O'))
-		prop_data = parse_texture(prop_data, line[0], &line[2]);
+		prop_data = parse_texture(&prop_data, line[0], &line[2]);
 	else if (line[0] == 'E' || line[0] == 'W')
-		prop_data = parse_texture(prop_data, line[0], &line[2]);
+		prop_data = parse_texture(&prop_data, line[0], &line[2]);
 	else if (line[0] == 'S')
-		prop_data = parse_texture(prop_data, 'P', &line[2]);
+		prop_data = parse_texture(&prop_data, 'P', &line[2]);
 	else if (line[0] == 'F')
-		prop_data = parse_floor(prop_data, &line[2]);
+		prop_data = parse_floor(&prop_data, &line[2]);
 	else if (line[0] == 'C')
-		prop_data = parse_ceil(prop_data, &line[2]);
+		prop_data = parse_ceil(&prop_data, &line[2]);
 	else if (ft_isdigit(line[0]))
-		prop_data = parse_map(prop_data, &line[0]);
+		prop_data = parse_map(&prop_data, &line[0]);
 	else
 		invoke_error(prop_data, 'A');
 	ft_free_str(line);
@@ -104,7 +104,7 @@ t_prop_data		cub3d_init(int fd)
 	{
 		prop_data = set_prop_data(prop_data, line);
 	}
-	if (validate_map(prop_data) == 0)
+	if (validate_map(&prop_data) == 0)
 		invoke_error(prop_data, 'M');
 	return (prop_data);
 }

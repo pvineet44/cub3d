@@ -40,17 +40,17 @@ typedef	struct		s_prop_data
 t_prop_data			cub3d_init(int fd);
 t_prop_data			set_prop_data(t_prop_data prop_data, char *line);
 t_prop_data			init_prop_data(t_prop_data prop_data);
-t_prop_data			parse_resolution(t_prop_data prop_data, char *line);
-t_prop_data			parse_texture(t_prop_data prop_data, char c, char *line);
-t_prop_data			parse_floor(t_prop_data prop_data, char *line);
-t_prop_data			parse_ceil(t_prop_data prop_data, char *line);
-t_prop_data			parse_map(t_prop_data prop_data, char *line);
+t_prop_data			parse_resolution(t_prop_data *prop_data, char *line);
+t_prop_data			parse_texture(t_prop_data *prop_data, char c, char *line);
+t_prop_data			parse_floor(t_prop_data *prop_data, char *line);
+t_prop_data			parse_ceil(t_prop_data *prop_data, char *line);
+t_prop_data			parse_map(t_prop_data *prop_data, char *line);
 void				invoke_error(t_prop_data prop_data, char sig);
 void				ft_putstr(char *str);
 int					ft_isspace(char c);
 int					ft_isdigit(char c);
 int					ft_atoi(char *str);
 int					ft_free_str(char *str);
-int 				validate_map(t_prop_data prop_data);
+int 				validate_map(t_prop_data *prop_data);
 
 #endif
