@@ -14,6 +14,19 @@
 #include <unistd.h>
 //gcc -lmlx -framework OpenGL -framework AppKit hook.c
 
+typedef struct 	w_mlx
+{
+	int xr_t;
+	int yr_t;
+	int xl_t;
+	int yl_t;
+	int xr_b;
+	int yr_b;
+	int xl_b;
+	int yl_b;
+}				wall_mlx;
+
+
 typedef struct 	s_mlx
 {
 	void *mlx;
@@ -21,13 +34,31 @@ typedef struct 	s_mlx
 	int  bpp;
 	int  size_line;
 	int endian;
+	int x;
+	int y;
+	wall_mlx w_mlx;
 }				t_mlx;
+
+
+
+
 
 int key_hook(int keycode, t_mlx *ph)
 {
 
 	void *mlx = ph->mlx;
 	void *win = ph->win;
+
+	if (keycode == 8)
+	{
+		mlx_clear_window(mlx, win);
+		return(0);
+	}
+	if (keycode  == 6)
+	{
+		zoom_square(ph);
+		return(0);
+	}
 	if (keycode == 53)
 	{
 		write(1, "Exiting program..\n", 18);
@@ -85,6 +116,79 @@ int draw_hline(int x, int y, t_mlx *ph)
 	return (0);
 }
 
+int draw_scene(int keycode, t_mlx *ph)
+{
+	//draw square
+
+	//draw left wall
+	//draw right wall
+}
+
+int zoom_square(t_mlx *ph)
+{
+	static int i;
+	void *mlx = ph->mlx;
+	void *win = ph->win;
+	int bpp = 32;
+	int size_line = 1600;
+	int endian = 1;
+	void *img;
+	int x;
+	int y;
+	x = ph->x;
+	y = ph->y;
+	i = i + 5;
+	int h;
+	int w;
+	h = 200 + i;
+	w = 200 + i;
+	int pix = h * w * 4;
+	img = mlx_new_image(mlx, h, w);
+	mlx_clear_window(mlx, win);
+	char *img_data =  mlx_get_data_addr(img, &bpp, &size_line, &endian);
+	char *tmp = img_data;
+	int c = 0;
+	while(c < pix)
+	{
+			*tmp++ = 102;
+			*tmp++ = 255;
+			*tmp++ = 255;
+			*tmp++ = 1;
+			c = c + 4;
+	}
+	mlx_put_image_to_window(mlx, win, img, x, y);	
+}
+
+int draw_square(int x, int y, t_mlx *ph)
+{
+	void *mlx = ph->mlx;
+	void *win = ph->win;
+	wall_mlx w_mlx = ph->w_mlx
+	int bpp = 32;
+	int size_line = 1600;
+	int endian = 1;
+	void *img;
+	img = mlx_new_image(mlx, 400,400);
+	char *img_data =  mlx_get_data_addr(img, &bpp, &size_line, &endian);
+	char *tmp = img_data;
+	x = 200;
+	y = 100;
+
+	int c = 0;
+	while(c < 640000)
+	{
+			*tmp++ = 102;
+			*tmp++ = 255;
+			*tmp++ = 255;
+			*tmp++ = 1;
+			c = c + 4;
+	}
+	mlx_put_image_to_window(mlx, win, img, x, y);
+
+	w_mlx.xr_l = x 
+	
+}
+
 int draw_vline(int x, int y, t_mlx *ph)
 {
 	void *mlx = ph->mlx;
@@ -113,9 +217,9 @@ int draw_vline(int x, int y, t_mlx *ph)
 int mouse_hook(int button, int x, int y, t_mlx *ph)
 {
 	if (button == 1)
-		draw_hline(x, y ,ph);
+		draw_square(x, y ,ph);
 	if (button == 2)
-		draw_vline(x, y ,ph);
+		draw_square(x, y ,ph);
 	
 
 	void *mlx = ph->mlx;
