@@ -14,7 +14,7 @@
 #include "mlx.h"
 #include <math.h>
 #include <stdlib.h>
-
+#include <stdio.h>
 typedef		struct		s_point
 {
 	int x;
@@ -61,14 +61,14 @@ point		rotate_line(point a, point b, int clockwise)
 	double radian;
 	degree = 5;
 	if (clockwise)
-		degree = -degree;
+		degree = 360 - degree;
 	radian = degree * 0.01745;
 	p.x = (int)(a.x + ((b.x - a.x)*cos(radian) - (b.y - a.y)*sin(radian)));
 	p.y = (int)(a.y + ((b.x - a.x)*sin(radian) + (b.y - a.y)*cos(radian)));
 	return (p);
 }
 
-void line(int x0, int y0, int x1, int y1, hold h)
+void	line(int x0, int y0, int x1, int y1, hold h)
 {
  	void *mlx = h.mlx;
 	void *win = h.win;
@@ -85,7 +85,7 @@ void line(int x0, int y0, int x1, int y1, hold h)
   }
 }
 
-int draw_line(hold h)
+int		draw_line(hold h)
 {
 	int x1;
 	int y1;
@@ -100,33 +100,112 @@ int draw_line(hold h)
 	y1 = a.y;
 	x2 = b.x;
 	y2 = b.y;
-	line(x1, y1, x2, y2, h);
+	// write(1, "jojojo", 6);
+	line(a.x, a.y, b.x, b.y, h);
 	return (0);
 }
 
+hold		step_forward(hold h)
+{
+	point a; 
+	point b;
+
+	a = h.a;
+	b = h.b;
+	a.y -= 5;
+	b.y -= 5;
+	line(a.x, a.y, b.x, b.y, h);
+	h.a = a;
+	h.b = b;
+	return (h);
+}
+hold		step_backward(hold h)
+{
+	point a; 
+	point b;
+
+	a = h.a;
+	b = h.b;
+	a.y += 5;
+	b.y += 5;
+	line(a.x, a.y, b.x, b.y, h);
+	h.a = a;
+	h.b = b;
+	return (h);
+}
+
+
+hold		strafe_right(hold h)
+{
+	point a; 
+	point b;
+
+	a = h.a;
+	b = h.b;
+	a.x += 5;
+	b.x += 5;
+	line(a.x, a.y, b.x, b.y, h);
+	h.a = a;
+	h.b = b;
+	return (h);
+}
+
+hold		strafe_left(hold h)
+{
+	point a; 
+	point b;
+
+	a = h.a;
+	b = h.b;
+	a.x -= 5;
+	b.x -= 5;
+	line(a.x, a.y, b.x, b.y, h);
+	h.a = a;
+	h.b = b;
+	return (h);
+}
+
+
 int		key_hook(int keycode, hold *h)
 {
-	int clockwise = 0;
-	if (keycode  == 124)
-	{
-		mlx_clear_window(h->mlx, h->win);	
-		point p = rotate_line(h->a, h->b, clockwise);
-		h->b = p;
-		draw_line(*h);
-	}
+	
+	// if (keycode  == 124)
+	// {
+	// 	mlx_clear_window(h->mlx, h->win);	
+	// 	point p = rotate_line(h->a, h->b, 0);
+	// 	h->b = p;
+	// 	draw_line(*h);
+	// }
 
-	if (keycode  == 123)
-	{
-		clockwise = 1;
-		mlx_clear_window(h->mlx, h->win);	
-		point p = rotate_line(h->a, h->b, clockwise);
-		h->b = p;
-		draw_line(*h);
-	}
+	// if (keycode  == 123)
+	// {
+	// 	mlx_clear_window(h->mlx, h->win);	
+	// 	point p = rotate_line(h->a, h->b, 1);
+	// 	h->b = p;
+	// 	draw_line(*h);
+	// }
 
-	if (keycode == 126)
+	if (keycode == 2)
 	{
 		mlx_clear_window(h->mlx, h->win);
+		*h = strafe_right(*h);
+	}
+
+	if (keycode == 0)
+	{
+		mlx_clear_window(h->mlx, h->win);
+		*h = strafe_left(*h);
+	}
+
+	if (keycode == 13)
+	{
+		mlx_clear_window(h->mlx, h->win);
+		*h = step_forward(*h);
+	}
+	if (keycode == 1)
+	{
+		mlx_clear_window(h->mlx, h->win);
+		*h = step_backward(*h);
 	}
 
 	return (0);
@@ -146,16 +225,16 @@ int main(int argc, const char *argv[])
 	point a;
 	a = init_point(a);
 	a.x = 200;
-	a.y = 200;
+	a.y = 300;
 	mlx_pixel_put(mlx, win, a.x, a.y, 0xffffff);
 	point b;
 	b = init_point(b);
-	b.x = 250;
-	b.y = 200;
+	b.x = 400;
+	b.y = 300;
 	mlx_pixel_put(mlx, win, b.x, b.y, 0xffffff);
-	//draw_line(h);
 	h.a = a;
 	h.b = b;
+	line(a.x, a.y, b.x, b.y, h);
 	mlx_key_hook(win, key_hook, &h);
 	mlx_loop(mlx);
 	return (0);
