@@ -17,8 +17,8 @@
 #include <stdio.h>
 typedef		struct		s_point
 {
-	int x;
-	int y;
+	double x;
+	double y;
 }						point;
 
 typedef		struct		s_hold
@@ -76,8 +76,8 @@ point		rotate_line(point a, point b, int clockwise)
 	radian = M_PI / 36;
 	radian = clockwise ? 2 * M_PI - radian : radian;
 	printf("DIST : %f", dist(a, b));
-	p.x = (int)(a.x + ((b.x - a.x)*cos(radian) - (b.y - a.y)*sin(radian)));
-	p.y = (int)(a.y + ((b.x - a.x)*sin(radian) + (b.y - a.y)*cos(radian)));
+	p.x = (double)(a.x + ((b.x - a.x)*cos(radian) - (b.y - a.y)*sin(radian)));
+	p.y = (double)(a.y + ((b.x - a.x)*sin(radian) + (b.y - a.y)*cos(radian)));
 	printf("\t DIST : %f\n", dist(a, p));
 	return (p);
 }
