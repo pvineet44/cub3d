@@ -53,6 +53,17 @@ void		swap(int *a, int*b)
 	*b = tmp;
 }
 
+
+double	dist(point a, point b)
+{
+	double difx;
+	double dify;
+
+	dify = b.y - a.y;
+	difx = b.x - a.x;
+	return (sqrt((dify * dify) + (difx * difx)));
+}
+
 point		rotate_line(point a, point b, int clockwise)
 {
 	point p;
@@ -62,9 +73,12 @@ point		rotate_line(point a, point b, int clockwise)
 	degree = 5;
 	if (clockwise)
 		degree = 360 - degree;
-	radian = degree * 0.01745;
+	radian = M_PI / 36;
+	radian = clockwise ? 2 * M_PI - radian : radian;
+	printf("DIST : %f", dist(a, b));
 	p.x = (int)(a.x + ((b.x - a.x)*cos(radian) - (b.y - a.y)*sin(radian)));
 	p.y = (int)(a.y + ((b.x - a.x)*sin(radian) + (b.y - a.y)*cos(radian)));
+	printf("\t DIST : %f\n", dist(a, p));
 	return (p);
 }
 
@@ -85,7 +99,7 @@ void	line(int x0, int y0, int x1, int y1, hold h)
   }
 }
 
-int		draw_line(hold h)
+int		draw_line(hold *h)
 {
 	int x1;
 	int y1;
@@ -93,15 +107,15 @@ int		draw_line(hold h)
 	int y2;
 	point a;
 	point b;
-	a = h.a;
-	b = h.b;
+	a = h->a;
+	b = h->b;
 
 	x1 = a.x;
 	y1 = a.y;
 	x2 = b.x;
 	y2 = b.y;
 	// write(1, "jojojo", 6);
-	line(a.x, a.y, b.x, b.y, h);
+	line(a.x, a.y, b.x, b.y, *h);
 	return (0);
 }
 
@@ -109,11 +123,20 @@ hold		step_forward(hold h)
 {
 	point a; 
 	point b;
+	double dif;
+	double d;
 
 	a = h.a;
 	b = h.b;
-	a.y -= 5;
-	b.y -= 5;
+	d = 0.1;
+	dif = b.x - a.x;
+	dif *= d;
+	a.x = a.x + dif;
+	b.x = b.x + dif;
+	dif = b.y - a.y;
+	dif *= d;
+	a.y = a.y + dif;
+	b.y = b.y + dif;
 	line(a.x, a.y, b.x, b.y, h);
 	h.a = a;
 	h.b = b;
@@ -139,11 +162,22 @@ hold		strafe_right(hold h)
 {
 	point a; 
 	point b;
+	double dif;
+	double d;
+	point new_b;
 
 	a = h.a;
 	b = h.b;
-	a.x += 5;
-	b.x += 5;
+	new_b = rotate_line(a, b, 1);
+	d = 0.1;
+	dif = new_b.x - a.x;
+	dif *= d;
+	a.x = a.x + dif;
+	b.x = b.x + dif;
+	dif = new_b.y - a.y;
+	dif *= d;
+	a.y = a.y + dif;
+	b.y = b.y + dif;
 	line(a.x, a.y, b.x, b.y, h);
 	h.a = a;
 	h.b = b;
@@ -154,11 +188,22 @@ hold		strafe_left(hold h)
 {
 	point a; 
 	point b;
+	point new_b;
+	double dif;
+	double d;
 
 	a = h.a;
 	b = h.b;
-	a.x -= 5;
-	b.x -= 5;
+	new_b = rotate_line(a, b, 0);
+	d = 0.1;
+	dif = new_b.x - a.x;
+	dif *= d;
+	a.x = a.x + dif;
+	b.x = b.x + dif;
+	dif = new_b.y - a.y;
+	dif *= d;
+	a.y = a.y + dif;
+	b.y = b.y + dif;
 	line(a.x, a.y, b.x, b.y, h);
 	h.a = a;
 	h.b = b;
@@ -169,21 +214,21 @@ hold		strafe_left(hold h)
 int		key_hook(int keycode, hold *h)
 {
 	
-	// if (keycode  == 124)
-	// {
-	// 	mlx_clear_window(h->mlx, h->win);	
-	// 	point p = rotate_line(h->a, h->b, 0);
-	// 	h->b = p;
-	// 	draw_line(*h);
-	// }
+	if (keycode  == 124)
+	{
+		mlx_clear_window(h->mlx, h->win);	
+		point p = rotate_line(h->a, h->b, 0);
+		h->b = p;
+		draw_line(h);
+	}
 
-	// if (keycode  == 123)
-	// {
-	// 	mlx_clear_window(h->mlx, h->win);	
-	// 	point p = rotate_line(h->a, h->b, 1);
-	// 	h->b = p;
-	// 	draw_line(*h);
-	// }
+	if (keycode  == 123)
+	{
+		mlx_clear_window(h->mlx, h->win);	
+		point p = rotate_line(h->a, h->b, 1);
+		h->b = p;
+		draw_line(h);
+	}
 
 	if (keycode == 2)
 	{
