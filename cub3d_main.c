@@ -62,6 +62,7 @@ int				validate_map(t_prop_data *prop_data)
 
 void			invoke_error(t_prop_data prop_data, char sig)
 {
+	(void)prop_data;
 	if (sig == 'M')
 		ft_putstr("Map Error: Please check the map.\n");
 	if (sig == 'A')
@@ -97,7 +98,7 @@ t_prop_data		cub3d_init(int fd)
 {
 	char		*line;
 	t_prop_data prop_data;
-
+	prop_data.map_height = 0;
 	prop_data = init_prop_data(prop_data);
 	line = NULL;
 	while (get_next_line(fd, &line) > 0)

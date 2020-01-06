@@ -13,19 +13,13 @@
 #include "cub3d.h"
 #include <stdio.h>
 
-int main(int argc, const char *argv[])
+void		check_prop_data(t_prop_data prop_data)
 {
-	int fd;
 	int i;
 	int j;
-	int x;
-
-	x = 0;
 	i = -1;
 	j = 0;
 	
-	fd = open(argv[1],O_RDONLY);
-	t_prop_data prop_data = cub3d_init(fd);
 	printf("h : %d\n", prop_data.h_resolution);
 	printf("v : %d\n", prop_data.v_resolution);
 	printf("NO: %s\n", prop_data.no_texture);
@@ -47,6 +41,21 @@ int main(int argc, const char *argv[])
 		write(1, "\n", 1);
 		j++;
 	}
+}
+
+int main(int argc, const char *argv[])
+{
+	int fd;
+	
+	if (argc < 2)
+	{
+		ft_putstr("Map error. No Map supplied as argument\n");
+		exit(0);
+	}
+	fd = open(argv[1],O_RDONLY);
+	t_prop_data prop_data = cub3d_init(fd);
+	check_prop_data(prop_data);
+	//cub3d_engine(prop_data);
 	//while (1);
 	return 0;
 }

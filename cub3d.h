@@ -46,6 +46,7 @@ t_prop_data			parse_floor(t_prop_data *prop_data, char *line);
 t_prop_data			parse_ceil(t_prop_data *prop_data, char *line);
 t_prop_data			parse_map(t_prop_data *prop_data, char *line);
 void				invoke_error(t_prop_data prop_data, char sig);
+void				cub3d_engine(t_prop_data prop_data);
 void				ft_putstr(char *str);
 int					ft_isspace(char c);
 int					ft_isdigit(char c);
