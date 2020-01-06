@@ -88,12 +88,13 @@ int main(int argc, const char *argv[])
 	fd = open(argv[1],O_RDONLY);
 	t_prop_data prop_data = cub3d_init(fd); // call it parse
 	//check_prop_data(prop_data);
-	//libx libx;
-	 //libx = create_window(prop_data.h_resolution, prop_data.v_resolution);
+	libx libx;
+	 libx = create_window(prop_data.h_resolution, prop_data.v_resolution);
 	 player player;
 	 player = init_raycast(&prop_data);
-	 check_player_data(player, prop_data);
-	 //mlx_loop(libx.mlx);
+	 //check_player_data(player, prop_data);
+	 draw_scene(&prop_data, &player, &libx);
+	 mlx_loop(libx.mlx);
 	//cub3d_raycast(prop_data);
 	//while (1);
 	return 0;
