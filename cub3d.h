@@ -13,7 +13,9 @@
 #ifndef CUB3D_H
 # define CUB3D_H
 # include <fcntl.h>
-# include <stdlib.h>
+#include "mlx.h"
+#include <math.h>
+#include <stdlib.h>
 # include <unistd.h>
 # include "get_next_line.h"
 
@@ -32,10 +34,41 @@ typedef	struct		s_prop_data
 	char			*so_texture;
 	char			*ea_texture;
 	char			*sprite_texture;
-	char			map[100][100];
+	char			**map;
+	char			direction;
 	int				map_height;
 	int				map_width;
+	int				posX;
+	int				posY;
 }					t_prop_data;
+
+typedef	struct		s_point
+{
+	double x;
+	double y;
+}					point;
+
+typedef struct		s_mlx
+{
+	void *mlx;
+	void *win;
+	char *title;
+}					libx;
+
+typedef struct		s_player
+{
+	char **map;
+	point position;
+	point direction;
+	point plane;
+	point rayDir;
+	point sideDist;
+	point deltaDist;
+	double perpWallDist;
+	double cameraX;
+	int mapX;
+	int mapY;
+}					player;
 
 t_prop_data			cub3d_init(int fd);
 t_prop_data			set_prop_data(t_prop_data prop_data, char *line);
@@ -45,11 +78,17 @@ t_prop_data			parse_texture(t_prop_data *prop_data, char c, char *line);
 t_prop_data			parse_floor(t_prop_data *prop_data, char *line);
 t_prop_data			parse_ceil(t_prop_data *prop_data, char *line);
 t_prop_data			parse_map(t_prop_data *prop_data, char *line);
-void				invoke_error(t_prop_data prop_data, char sig);
+player				init_player(player player);
+player            	init_raycast(t_prop_data *prop_data);
+point				init_point(point a);
+libx				init_libx(libx libx);
+libx				create_window(int width, int height);
+void				invoke_error(char sig);
 void				cub3d_engine(t_prop_data prop_data);
 void				ft_putstr(char *str);
 int					ft_isspace(char c);
 int					ft_isdigit(char c);
+int					ft_isalpha(int c);
 int					ft_atoi(char *str);
 int					ft_free_str(char *str);
 int 				validate_map(t_prop_data *prop_data);

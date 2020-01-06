@@ -135,7 +135,6 @@ int main(int ac/*argc*/, char **av/*argv*/)
 	void *mlx;
   double height = 480;
   double width  = 640;
-
 	mlx = mlx_init();
 	win = mlx_new_window(mlx, 640, 480, "LRC");
   

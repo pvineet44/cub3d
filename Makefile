@@ -19,10 +19,12 @@ SRC = get_next_line_utils.c\
 		gen_utils.c\
 		cub3d_main.c\
 		parse_utils.c\
+		cub3d_engine.c\
+		struct_utils.c\
 
 CC = gcc
 
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra 
 
 OBJ = $(SRC:.c=.o)
 

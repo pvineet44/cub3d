@@ -97,12 +97,17 @@ t_prop_data			parse_map(t_prop_data *prop_data, char *line)
 	j = prop_data->map_height;
 	while (line && line[k])
 	{
-		if (ft_isspace(line[k]))
-		{
-			k++;
+		if ((ft_isspace(line[k])) && (k = k + 1))
 			continue;
+		if (ft_isalpha(line[k]))
+		{
+			prop_data->posX = i;
+			prop_data->posY = j;
+			prop_data->direction = line[k];
+			prop_data->map[i][j] = '0';
 		}
-		prop_data->map[i][j] = line[k];
+		else
+			prop_data->map[i][j] = line[k];
 		i++;
 		k++;
 	}

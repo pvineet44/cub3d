@@ -12,8 +12,29 @@
 
 #include "cub3d.h"
 
+char			**init_map()
+{
+	char **map;
+	int i;
+
+	i = 0;
+	map = (char **)malloc(sizeof(char *) * 101);
+	if (map == NULL)
+		return NULL;
+	while (i < 50)
+	{
+		map[i] = (char *)malloc(sizeof(char) * 100);
+		if (map[i] == NULL)
+			return (NULL);
+		i++;
+	}
+	map[i] = 0;
+	return (map);
+}
+
 t_prop_data		init_prop_data(t_prop_data prop_data)
 {
+	prop_data.map = init_map();
 	prop_data.map_height = 0;
 	prop_data.map_width = 0;
 	prop_data.h_resolution = 0;
@@ -29,6 +50,9 @@ t_prop_data		init_prop_data(t_prop_data prop_data)
 	prop_data.so_texture = NULL;
 	prop_data.ea_texture = NULL;
 	prop_data.sprite_texture = NULL;
+	prop_data.posX = 0;
+	prop_data.posY = 0;
+	prop_data.direction = 'N';
 	return (prop_data);
 }
 
@@ -60,13 +84,14 @@ int				validate_map(t_prop_data *prop_data)
 	return (1);
 }
 
-void			invoke_error(t_prop_data prop_data, char sig)
+void			invoke_error(char sig)
 {
-	(void)prop_data;
 	if (sig == 'M')
 		ft_putstr("Map Error: Please check the map.\n");
 	if (sig == 'A')
 		ft_putstr("Argument Error: Please enter valid arguements.\n");
+	if (sig == 'P')
+		ft_putstr("Internal Error: Error in memory or processing\n");
 	exit(0);
 }
 
@@ -89,7 +114,7 @@ t_prop_data		set_prop_data(t_prop_data prop_data, char *line)
 	else if (ft_isdigit(line[0]))
 		prop_data = parse_map(&prop_data, &line[0]);
 	else
-		invoke_error(prop_data, 'A');
+		invoke_error('A');
 	ft_free_str(line);
 	return (prop_data);
 }
@@ -98,14 +123,17 @@ t_prop_data		cub3d_init(int fd)
 {
 	char		*line;
 	t_prop_data prop_data;
+
 	prop_data.map_height = 0;
 	prop_data = init_prop_data(prop_data);
+	(void)fd;
+	(void)line;
 	line = NULL;
 	while (get_next_line(fd, &line) > 0)
 	{
 		prop_data = set_prop_data(prop_data, line);
 	}
 	if (validate_map(&prop_data) == 0)
-		invoke_error(prop_data, 'M');
+		invoke_error('M');
 	return (prop_data);
 }
