@@ -140,26 +140,24 @@ player         *perform_dda(player *player)
     while (hit == 0)
     {
         if (player->sideDist.x < player->sideDist.y)
-            set_sideDist(player, 'x');
+            {
+                set_sideDist(player, 'x');
+                side = 0;
+            }
         else
         {
             set_sideDist(player, 'y');
             side = 1;
         }
-            
-        if (player->map[player->mapX][player->mapY] > 0)
+        if (player->map[player->mapX][player->mapY] > '0')
             hit = 1;
     }
     if (side == 0)
-        player->perpWallDist = (player->mapX - player->position.x + (1 - player->stepX) / 2) / player->rayDir.x;
+        player->perpWallDist = \
+        (player->mapX - player->position.x + (1 - player->stepX) / 2) / player->rayDir.x;
     else
-        player->perpWallDist = (player->mapY - player->position.y + (1 - player->stepY) / 2) / player->rayDir.y;
-    //     printf("player->perpWallDist: %f\n", player->perpWallDist);
-    //    printf("mapX: %d \t position.X: %f \t stepX: %d \t rayDirX: %f\n", player->mapX, player->position.x, player->stepX, player->rayDir.x);
-    //    printf("mapY: %d \t position.Y: %f \t stepY: %d \t rayDirY: %f\n", player->mapY, player->position.y, player->stepY, player->rayDir.y);
-
-    
-    // printf("lineHeight: %d\n", lineHeight);
+        player->perpWallDist = \
+        (player->mapY - player->position.y + (1 - player->stepY) / 2) / player->rayDir.y;
     return (player);
 }
 
@@ -205,7 +203,7 @@ player         *render_image(t_prop_data *prop_data, player *player, libx *libx,
     if (drawEnd >= prop_data->v_resolution)
         drawEnd = prop_data->v_resolution - 1;
     
-    if (player->map[player->mapX][player->mapY] > 0)
+    if (player->map[player->mapX][player->mapY] > '0')
         draw_column(column, drawStart, drawEnd, libx);
     return (player);
 }
@@ -217,7 +215,7 @@ void           draw_scene(t_prop_data *prop_data, player *player, libx *libx)
     i = 0;
     while(i < prop_data->h_resolution)
     {
-        // printf("prop_data->h_resolution: %d\t i:%f\n", prop_data->h_resolution, i);
+        
         player->cameraX = 2 * i / (prop_data->h_resolution) - 1;
         player->rayDir.x = player->direction.x + (player->plane.x * player->cameraX);
         player->rayDir.y = player->direction.y + (player->plane.y * player->cameraX);
@@ -227,8 +225,7 @@ void           draw_scene(t_prop_data *prop_data, player *player, libx *libx)
         player->deltaDist.x = fabs(1/player->rayDir.x);
         player->deltaDist.y = fabs(1/player->rayDir.y);
         player = calculate_step_dist(player);
-        printf("mapX: %d \t position.X: %f \t deltaDistX %f \t sideDistX %f\n", player->mapX, player->position.x, player->deltaDist.x, player->sideDist.x);
-        printf("mapY: %d \t position.Y: %f \t deltaDistY %f \t sideDistY %f\n", player->mapY, player->position.y, player->deltaDist.y, player->sideDist.y);
+        
         player = perform_dda(player);
         player = render_image(prop_data, player, libx, i);
         i++;

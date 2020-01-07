@@ -192,11 +192,10 @@ void paint(move *mv)
         stepY = 1;
         sideDistY = (mapY + 1.0 - mv->posY) * deltaDistY;
       }
-      
+        printf("sideDistX: %f\t sideDistY: %f\n", sideDistX, sideDistY);
            //perform DDA
       while (hit == 0)
       {
-        printf("sideDistX: %f\tsideDistY:%f\n", sideDistX, sideDistY);
         //jump to next map square, OR in x-direction, OR in y-direction
         if (sideDistX < sideDistY)
         {
