@@ -176,8 +176,6 @@ void           draw_column(int x, int drawStart, int drawEnd, libx *libx)
     char *tmp = img_data;
     int pix = 4 * height;
     int c = 0;
-//    printf("c: %d \t ds: %d \t de: %d \t h: %d\n", x, drawStart, drawEnd, height);
-//   printf("A: %d\n", A);
     while (c < pix)
     {
         *tmp++ = R;
