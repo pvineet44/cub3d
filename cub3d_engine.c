@@ -95,25 +95,24 @@ player         *calculate_step_dist(player *player)
 {
     if (player->rayDir.x < 0)
     {
-        player->step.x = -1;
+        player->stepX = -1;
         player->sideDist.x = (player->position.x - player->mapX) * player->deltaDist.x;
     }
     else
     {
-        player->step.x = 1;
+        player->stepX = 1;
         player->sideDist.x = (player->mapX + 1.0 - player->position.x) * player->deltaDist.x;
     }
     if (player->rayDir.y < 0)
     {
-        player->step.y = -1;
+        player->stepY = -1;
         player->sideDist.y = (player->position.y - player->mapY) * player->deltaDist.y;
     }
     else
     {
-        player->step.y = 1;
+        player->stepY = 1;
         player->sideDist.y = (player->mapY + 1.0 - player->position.y) * player->deltaDist.y;
-    }
-    printf("pod: %f\n",player->perpWallDist);
+    }      
     return (player);
 }
 player         *set_sideDist(player *player, char c)
@@ -121,12 +120,12 @@ player         *set_sideDist(player *player, char c)
     if (c == 'x')
     {
         player->sideDist.x += player->deltaDist.x;
-        player->mapX += player->step.x;
+        player->mapX += player->stepX;
     }
     if (c == 'y')
     {
         player->sideDist.y += player->deltaDist.y;
-        player->mapY += player->step.y;
+        player->mapY += player->stepY;
     }
 
     return (player);
@@ -142,18 +141,25 @@ player         *perform_dda(player *player)
     {
         if (player->sideDist.x < player->sideDist.y)
             set_sideDist(player, 'x');
-        else if ((side = side + 1))
+        else
+        {
             set_sideDist(player, 'y');
+            side = 1;
+        }
+            
         if (player->map[player->mapX][player->mapY] > 0)
             hit = 1;
     }
     if (side == 0)
-        player->perpWallDist = \
-        (player->mapX - player->position.x + (1 - player->step.x) / 2) / player->rayDir.x;
+        player->perpWallDist = (player->mapX - player->position.x + (1 - player->stepX) / 2) / player->rayDir.x;
     else
-        player->perpWallDist = \
-        (player->mapY - player->position.y + (1 - player->step.y) / 2) / player->rayDir.y;
-        
+        player->perpWallDist = (player->mapY - player->position.y + (1 - player->stepY) / 2) / player->rayDir.y;
+    //     printf("player->perpWallDist: %f\n", player->perpWallDist);
+    //    printf("mapX: %d \t position.X: %f \t stepX: %d \t rayDirX: %f\n", player->mapX, player->position.x, player->stepX, player->rayDir.x);
+    //    printf("mapY: %d \t position.Y: %f \t stepY: %d \t rayDirY: %f\n", player->mapY, player->position.y, player->stepY, player->rayDir.y);
+
+    
+    // printf("lineHeight: %d\n", lineHeight);
     return (player);
 }
 
@@ -172,7 +178,7 @@ void           draw_column(int x, int drawStart, int drawEnd, libx *libx)
     char *tmp = img_data;
     int pix = 4 * height;
     int c = 0;
-//   printf("B: %d\n", B);
+//    printf("c: %d \t ds: %d \t de: %d \t h: %d\n", x, drawStart, drawEnd, height);
 //   printf("A: %d\n", A);
     while (c < pix)
     {
@@ -190,7 +196,7 @@ player         *render_image(t_prop_data *prop_data, player *player, libx *libx,
     int lineHeight;
     int drawStart;
     int drawEnd;
-
+    
     lineHeight= (int)(2 * prop_data->v_resolution / player->perpWallDist);
     drawStart = -lineHeight / 2 + prop_data->v_resolution / 2;
     if (drawStart < 0)
@@ -198,30 +204,31 @@ player         *render_image(t_prop_data *prop_data, player *player, libx *libx,
     drawEnd = lineHeight / 2 + prop_data->v_resolution / 2;
     if (drawEnd >= prop_data->v_resolution)
         drawEnd = prop_data->v_resolution - 1;
-    if (player->map[player->mapX][player->mapY] == '1')
-    {
+    
+    if (player->map[player->mapX][player->mapY] > 0)
         draw_column(column, drawStart, drawEnd, libx);
-    }
     return (player);
 }
 
 void           draw_scene(t_prop_data *prop_data, player *player, libx *libx)
 {
-    int i;
+    double i;
 
     i = 0;
     while(i < prop_data->h_resolution)
     {
+        // printf("prop_data->h_resolution: %d\t i:%f\n", prop_data->h_resolution, i);
         player->cameraX = 2 * i / (prop_data->h_resolution) - 1;
         player->rayDir.x = player->direction.x + (player->plane.x * player->cameraX);
         player->rayDir.y = player->direction.y + (player->plane.y * player->cameraX);
-
-        player->mapX = player->position.x;
-        player->mapY = player->position.y;
-
+        
+        player->mapX = (int)player->position.x;
+        player->mapY = (int)player->position.y;
         player->deltaDist.x = fabs(1/player->rayDir.x);
         player->deltaDist.y = fabs(1/player->rayDir.y);
         player = calculate_step_dist(player);
+        printf("mapX: %d \t position.X: %f \t deltaDistX %f \t sideDistX %f\n", player->mapX, player->position.x, player->deltaDist.x, player->sideDist.x);
+        printf("mapY: %d \t position.Y: %f \t deltaDistY %f \t sideDistY %f\n", player->mapY, player->position.y, player->deltaDist.y, player->sideDist.y);
         player = perform_dda(player);
         player = render_image(prop_data, player, libx, i);
         i++;

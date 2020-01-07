@@ -101,8 +101,8 @@ t_prop_data			parse_map(t_prop_data *prop_data, char *line)
 			continue;
 		if (ft_isalpha(line[k]))
 		{
-			prop_data->posX = i;
-			prop_data->posY = j;
+			prop_data->posX = j;
+			prop_data->posY = i;
 			prop_data->direction = line[k];
 			prop_data->map[i][j] = '0';
 		}

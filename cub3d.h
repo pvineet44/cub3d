@@ -64,11 +64,12 @@ typedef struct		s_player
 	point rayDir;
 	point sideDist;
 	point deltaDist;
-	point step;
 	double perpWallDist;
 	double cameraX;
 	int mapX;
 	int mapY;
+	int stepX;
+	int stepY;
 }					player;
 
 t_prop_data			cub3d_init(int fd);

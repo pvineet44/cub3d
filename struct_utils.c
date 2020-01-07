@@ -36,10 +36,11 @@ player          init_player(player player)
     player.rayDir = init_point(player.rayDir);
     player.sideDist = init_point(player.sideDist);
     player.deltaDist = init_point(player.deltaDist);
-    player.step = init_point(player.step);
     player.perpWallDist = 55;
     player.cameraX = 0;
     player.mapX = 0;
     player.mapY = 0;
+    player.stepX = 0;
+    player.stepY = 0;
     return (player);
 }
