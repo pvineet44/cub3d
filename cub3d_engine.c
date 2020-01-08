@@ -14,14 +14,14 @@
 #include "mlx.h"
 #include <stdio.h>
 
-libx             create_window(int width, int height)
+player             create_window(int width, int height)
 {
     void *mlx;
     void *win;
-    libx libx;
+    player player;
 
-    libx.win = 0;
-    libx = init_libx(libx);
+    player.win = 0;
+    player = init_player(player);
     if (width == 0 || height == 0)
     {
         ft_putstr("Resolution Error. Please check the resolution arguments.\n");
@@ -30,37 +30,37 @@ libx             create_window(int width, int height)
     mlx = mlx_init();
     if (mlx == NULL)
         invoke_error('P');
-    win = mlx_new_window(mlx, width, height, libx.title);
+    win = mlx_new_window(mlx, width, height, player.title);
     if (win == NULL)
         invoke_error('P');
-    libx.mlx = mlx;
-    libx.win = win;
-    return(libx);
+    player.mlx = mlx;
+    player.win = win;
+    return(player);
 }
 
 point           get_direction(char direction)
 {
     point   dir;
     
-    if (direction == 'N')
-    {
-        dir.x = 0;
-        dir.y = 1;
-    }
-    else if (direction == 'E')
+    if (direction == 'E')
     {
         dir.x = 1;
-        dir.y = 0;
-    }
-    else if (direction == 'W')
-    {
-        dir.x = -1;
         dir.y = 0;
     }
     else if (direction == 'S')
     {
         dir.x = 0;
-        dir.y = -1;
+        dir.y = 1;
+    }
+    else if (direction == 'N')
+    {
+        dir.x = -1;
+        dir.y = 0;
+    }
+    else if (direction == 'W')
+    {
+        dir.x = 1;
+        dir.y = 0;
     }
     else
     {
@@ -69,25 +69,23 @@ point           get_direction(char direction)
     }
     return (dir);
 }
-player            init_raycast(t_prop_data *prop_data)
+player            *init_raycast(t_prop_data *prop_data, player *player)
 {
     point position;
     point direction;
     point plane;
-    player player;
 
-    player.map = NULL;
-    player = init_player(player);
+
     position.x = prop_data->posX;
     position.y = prop_data->posY;
 
     direction = get_direction(prop_data->direction);
     plane.x = 0;
     plane.y = 0.66;
-    player.map = prop_data->map;
-    player.position = position;
-    player.plane = plane;
-    player.direction = direction;
+    player->map = prop_data->map;
+    player->position = position;
+    player->plane = plane;
+    player->direction = direction;
     return (player);
 }
 
@@ -161,7 +159,7 @@ player         *perform_dda(player *player)
     return (player);
 }
 
-void           draw_column(int x, int drawStart, int drawEnd, libx *libx)
+void           draw_column(int x, int drawStart, int drawEnd, player *player)
 {
     int R = 251;
     int G = 247;
@@ -171,7 +169,8 @@ void           draw_column(int x, int drawStart, int drawEnd, libx *libx)
     int endian;
     int size_line;
     int height = drawEnd - drawStart;
-    char *img = mlx_new_image(libx->mlx, 1, height);
+    char *img = mlx_new_image(player->mlx, 1, height);
+    
     char *img_data = mlx_get_data_addr(img, &bpp, &size_line, &endian);
     char *tmp = img_data;
     int pix = 4 * height;
@@ -184,10 +183,10 @@ void           draw_column(int x, int drawStart, int drawEnd, libx *libx)
         *tmp++ = A;
         c += 4;
     }
-    mlx_put_image_to_window(libx->mlx, libx->win, img, x, drawStart);
+    mlx_put_image_to_window(player->mlx, player->win, img, x, drawStart);
 }
 
-player         *render_image(t_prop_data *prop_data, player *player, libx *libx, int column)
+player         *render_image(t_prop_data *prop_data, player *player, int column)
 {
     int lineHeight;
     int drawStart;
@@ -202,11 +201,11 @@ player         *render_image(t_prop_data *prop_data, player *player, libx *libx,
         drawEnd = prop_data->v_resolution - 1;
     
     if (player->map[player->mapX][player->mapY] > '0')
-        draw_column(column, drawStart, drawEnd, libx);
+        draw_column(column, drawStart, drawEnd, player);
     return (player);
 }
 
-void           draw_scene(t_prop_data *prop_data, player *player, libx *libx)
+void           draw_scene(t_prop_data *prop_data, player *player)
 {
     double i;
 
@@ -225,7 +224,7 @@ void           draw_scene(t_prop_data *prop_data, player *player, libx *libx)
         player = calculate_step_dist(player);
         
         player = perform_dda(player);
-        player = render_image(prop_data, player, libx, i);
+        player = render_image(prop_data, player, i);
         i++;
     }
 }

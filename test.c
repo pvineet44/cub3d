@@ -76,6 +76,20 @@ void		check_player_data(player player, t_prop_data prop_data)
 	}
 }
 
+int key_hook(int key,player *player)
+{
+  mlx_clear_window(player->mlx,player->win);
+  if (key == 53)
+    exit(0);
+  else if (key == 123 || key == 124)
+      rotate(key, player);
+  else if (key == 125 || key == 126 || key == 13 || key == 1)
+        walk(key, player);
+  	draw_scene(player->prop_data, player);
+
+  return 0;
+  }
+
 int main(int argc, const char *argv[])
 {
 	int fd;
@@ -88,13 +102,14 @@ int main(int argc, const char *argv[])
 	fd = open(argv[1],O_RDONLY);
 	t_prop_data prop_data = cub3d_init(fd); // call it parse
 	//check_prop_data(prop_data);
-	libx libx;
-	 libx = create_window(prop_data.h_resolution, prop_data.v_resolution);
-	 player player;
-	 player = init_raycast(&prop_data);
-	 //check_player_data(player, prop_data);
-	 draw_scene(&prop_data, &player, &libx);
-	 mlx_loop(libx.mlx);
+	player player;
+	player = create_window(prop_data.h_resolution, prop_data.v_resolution);
+	init_raycast(&prop_data, &player);
+	//check_player_data(player, prop_data);
+	player.prop_data = &prop_data;
+	draw_scene(&prop_data, &player);
+	mlx_key_hook(player.win, key_hook, &player);
+	mlx_loop(player.mlx);
 	//cub3d_raycast(prop_data);
 	//while (1);
 	return 0;

@@ -21,6 +21,7 @@ SRC = get_next_line_utils.c\
 		parse_utils.c\
 		cub3d_engine.c\
 		struct_utils.c\
+		cub3d_movements.c\
 
 CC = gcc
 

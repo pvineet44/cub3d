@@ -19,13 +19,13 @@ point          init_point(point a)
     return (a);
 }
 
-libx          init_libx(libx libx)
-{
-    libx.mlx = 0;
-    libx.win = 0;
-    libx.title = "cu3bd";
-    return (libx);
-}
+// libx          init_libx(libx libx)
+// {
+//     libx.mlx = 0;
+//     libx.win = 0;
+//     libx.title = "cu3bd";
+//     return (libx);
+// }
 
 player          init_player(player player)
 {
@@ -42,5 +42,8 @@ player          init_player(player player)
     player.mapY = 0;
     player.stepX = 0;
     player.stepY = 0;
+    player.win = 0;
+    player.mlx = 0;
+    player.title = "Cub3d";
     return (player);
 }

@@ -1,0 +1,11 @@
+{
+    "files.associations": {
+        "string": "c",
+        "__bit_reference": "c",
+        "__string": "c",
+        "algorithm": "c",
+        "ios": "c",
+        "memory": "c",
+        "type_traits": "c"
+    }
+}

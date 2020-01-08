@@ -70,6 +70,10 @@ typedef struct		s_player
 	int mapY;
 	int stepX;
 	int stepY;
+	void *mlx;
+	void *win;
+	char *title;
+	t_prop_data *prop_data;
 }					player;
 
 t_prop_data			cub3d_init(int fd);
@@ -80,27 +84,29 @@ t_prop_data			parse_texture(t_prop_data *prop_data, char c, char *line);
 t_prop_data			parse_floor(t_prop_data *prop_data, char *line);
 t_prop_data			parse_ceil(t_prop_data *prop_data, char *line);
 t_prop_data			parse_map(t_prop_data *prop_data, char *line);
-player         		*render_image(t_prop_data *prop_data, player *player, libx *libx, int column);
+player         		*render_image(t_prop_data *prop_data, player *player, int column);
 player				*perform_dda(player *player);
 player    		    *set_sideDist(player *player, char c);
 player        	 	*calculate_step_dist(player *player);
-player   	        init_raycast(t_prop_data *prop_data);
+player   	        *init_raycast(t_prop_data *prop_data, player *player);
 point				get_direction(char direction);
 player				init_player(player player);
-player            	init_raycast(t_prop_data *prop_data);
 point				init_point(point a);
 libx				init_libx(libx libx);
-libx				create_window(int width, int height);
-void				draw_scene(t_prop_data *prop_data, player *player, libx *libx);
+player				create_window(int width, int height);
+void				draw_scene(t_prop_data *prop_data, player *player);
 void				invoke_error(char sig);
 void				cub3d_engine(t_prop_data prop_data);
 void				ft_putstr(char *str);
-void				draw_column(int x, int drawStart, int drawEnd, libx *libx);
+void           		draw_column(int x, int drawStart, int drawEnd, player *player);
+void				rotate(int key, player *player);
+void 				walk(int key, player *player);
 int					ft_isspace(char c);
 int					ft_isdigit(char c);
 int					ft_isalpha(int c);
 int					ft_atoi(char *str);
 int					ft_free_str(char *str);
+int					key_hook(int key,player *player);
 int 				validate_map(t_prop_data *prop_data);
 
 #endif
