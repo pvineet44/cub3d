@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../includes/cub3d.h"
 
 t_prop_data			parse_resolution(t_prop_data *prop_data, char *line)
 {

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "includes/cub3d.h"
 #include <stdio.h>
 
 void		check_prop_data(t_prop_data prop_data)
@@ -46,49 +46,49 @@ void		check_prop_data(t_prop_data prop_data)
 	}
 }
 
-void		check_player_data(player player, t_prop_data prop_data)
-{	
-	int i;
-	int j;
-	i = -1;
-	j = 0;
-	printf("position(x,y): %f,%f\n", player.position.x, player.position.y);
-	printf("direction(x,y): %f,%f\n", player.direction.x, player.direction.y);
-	printf("plane(x,y): %f,%f\n", player.plane.x, player.plane.y);
-	printf("rayDir(x,y): %f,%f\n", player.rayDir.x, player.rayDir.y);
-	printf("sideDist(x,y): %f,%f\n", player.sideDist.x, player.sideDist.y);
-	printf("deltaDist(x,y): %f,%f\n", player.deltaDist.x, player.deltaDist.y);
-	printf("perpWallDist: %f\n", player.perpWallDist);
-	printf("cameraX: %f\n", player.cameraX);
-	printf("map(x,y): %d,%d\n", player.mapX, player.mapY);
+// void		check_player_data(player player, t_prop_data prop_data)
+// {	
+// 	int i;
+// 	int j;
+// 	i = -1;
+// 	j = 0;
+// 	printf("position(x,y): %f,%f\n", player.position.x, player.position.y);
+// 	printf("direction(x,y): %f,%f\n", player.direction.x, player.direction.y);
+// 	printf("plane(x,y): %f,%f\n", player.plane.x, player.plane.y);
+// 	printf("rayDir(x,y): %f,%f\n", player.rayDir.x, player.rayDir.y);
+// 	printf("sideDist(x,y): %f,%f\n", player.sideDist.x, player.sideDist.y);
+// 	printf("deltaDist(x,y): %f,%f\n", player.deltaDist.x, player.deltaDist.y);
+// 	printf("perpWallDist: %f\n", player.perpWallDist);
+// 	printf("cameraX: %f\n", player.cameraX);
+// 	printf("map(x,y): %d,%d\n", player.mapX, player.mapY);
 
-	while(j < prop_data.map_height)
-	{
-		i = 0;
-		while (i < prop_data.map_width)
-		{
-			write(1, &player.map[i][j], 1);
-			//printf("%c", prop_data.map[i][j]);
-			i++;
-		}
-		write(1, "\n", 1);
-		j++;
-	}
-}
+// 	while(j < prop_data.map_height)
+// 	{
+// 		i = 0;
+// 		while (i < prop_data.map_width)
+// 		{
+// 			write(1, &player.map[i][j], 1);
+// 			//printf("%c", prop_data.map[i][j]);
+// 			i++;
+// 		}
+// 		write(1, "\n", 1);
+// 		j++;
+// 	}
+// }
 
-int key_hook(int key,player *player)
-{
-  mlx_clear_window(player->mlx,player->win);
-  if (key == 53)
-    exit(0);
-  else if (key == 123 || key == 124)
-      rotate(key, player);
-  else if (key == 125 || key == 126 || key == 13 || key == 1)
-        walk(key, player);
-  	draw_scene(player->prop_data, player);
+// int key_hook(int key,player *player)
+// {
+//   mlx_clear_window(player->mlx,player->win);
+//   if (key == 53)
+//     exit(0);
+//   else if (key == 123 || key == 124)
+//       rotate(key, player);
+//   else if (key == 125 || key == 126 || key == 13 || key == 1)
+//         walk(key, player);
+//   	draw_scene(player->prop_data, player);
 
-  return 0;
-  }
+//   return 0;
+//   }
 
 int main(int argc, const char *argv[])
 {

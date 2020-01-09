@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "../includes/cub3d.h"
 
 libx             *create_window(int width, int height)
 {
@@ -24,5 +24,7 @@ libx             *create_window(int width, int height)
     libx->mlx = mlx_init();
     libx->win = mlx_new_window(libx->mlx, width, height, libx->title);
     libx->surface = mlx_new_image(libx->mlx, width, height);
+    libx->data = mlx_get_data_addr(libx->surface,
+			&config[0], &config[1], &config[2]);
     return(libx);
 }
