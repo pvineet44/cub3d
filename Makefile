@@ -19,9 +19,7 @@ SRC = srcs/get_next_line_utils.c\
 		srcs/gen_utils.c\
 		srcs/cub3d_main.c\
 		srcs/parse_utils.c\
-		srcs/cub3d_engine.c\
 		srcs/struct_utils.c\
-		srcs/cub3d_movements.c\
 		srcs/cub3d_events.c\
 		srcs/cub3d_game.c\
 

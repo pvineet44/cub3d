@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d_game.c                                       :+:      :+:    :+:   */
+/*   cub3d_player.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vparekh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -32,13 +32,24 @@ player          *create_game(player *player)
 
 void            update(player *player)
 {
-    if (player->keys->k_right)
-        rotate(player, 1);
-    if (player->keys->k_left)
-        rotate(player, -1);
+   if (player->keys->k_right)
+		rotate(player, 1);
+	if (player->keys->k_left)
+		rotate(player, -1);
+	if (player->keys->k_up || player->keys->k_w)
+		go(player, 0);
+	if (player->keys->k_down || player->keys->k_s)
+		go(player, 2);
+	if (player->keys->k_a)
+		go(player, 1);
+	if (player->keys->k_d)
+		go(player, 3);
+        (void)player;
+
 }
 
 void            draw(player *player)
 {
-    update(player);
+    (void)player;
+    // update(player);
 }

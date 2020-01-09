@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/cub3d.h"
+#include "../includes/cub3d.h"
 #include <stdio.h>
 
 void		check_prop_data(t_prop_data prop_data)

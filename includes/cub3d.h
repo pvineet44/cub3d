@@ -13,11 +13,13 @@
 #ifndef CUB3D_H
 # define CUB3D_H
 # include <fcntl.h>
-#include "mlx.h"
+#include "../minilibx/mlx.h"
 #include <math.h>
 #include <stdlib.h>
 # include <unistd.h>
 # include "get_next_line.h"
+
+# define ROTATE_SPEED 0.3
 
 typedef	struct		s_prop_data
 {
@@ -74,7 +76,6 @@ typedef struct		s_libx
 {
 	void 			*mlx;
 	void 			*win;
-	char 			*title;
 	void 			*surface;
 	char			*data;
 	unsigned int	width;
@@ -120,7 +121,7 @@ void				invoke_error(char sig);
 void				cub3d_engine(t_prop_data prop_data);
 void				ft_putstr(char *str);
 void           		draw_column(int x, int drawStart, int drawEnd, player *player);
-void				rotate(int key, player *player);
+void				rotate(player *player, int direction);
 void 				walk(int key, player *player);
 int					ft_isspace(char c);
 int					ft_isdigit(char c);
