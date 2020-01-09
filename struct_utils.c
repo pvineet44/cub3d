@@ -12,38 +12,31 @@
 
 #include "cub3d.h"
 
-point          init_point(point a)
+libx          *init_libx(libx *libx)
 {
-    a.x = 0;
-    a.y = 0;
-    return (a);
+    libx->mlx = 0;
+    libx->win = 0;
+    libx->title = "cu3bd";
+    return (libx);
 }
 
-// libx          init_libx(libx libx)
-// {
-//     libx.mlx = 0;
-//     libx.win = 0;
-//     libx.title = "cu3bd";
-//     return (libx);
-// }
-
-player          init_player(player player)
+player          init_player(player *player)
 {
-    player.map = NULL;
-    player.position = init_point(player.position);
-    player.direction = init_point(player.direction);
-    player.plane = init_point(player.plane);
-    player.rayDir = init_point(player.rayDir);
-    player.sideDist = init_point(player.sideDist);
-    player.deltaDist = init_point(player.deltaDist);
-    player.perpWallDist = 55;
-    player.cameraX = 0;
-    player.mapX = 0;
-    player.mapY = 0;
-    player.stepX = 0;
-    player.stepY = 0;
-    player.win = 0;
-    player.mlx = 0;
-    player.title = "Cub3d";
-    return (player);
+    // player.map = NULL;
+    // player.position = init_point(player.position);
+    // player.direction = init_point(player.direction);
+    // player.plane = init_point(player.plane);
+    // player.rayDir = init_point(player.rayDir);
+    // player.sideDist = init_point(player.sideDist);
+    // player.deltaDist = init_point(player.deltaDist);
+    // player.perpWallDist = 0;
+    // player.cameraX = 0;
+    // player.mapX = 0;
+    // player.mapY = 0;
+    // player.stepX = 0;
+    // player.stepY = 0;
+    // player.win = 0;
+    // player.mlx = 0;
+    // player.angle = 0.0;
+    return (*player);
 }

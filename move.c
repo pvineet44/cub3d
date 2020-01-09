@@ -143,8 +143,7 @@ void paint(move *mv)
       double cameraX = 2 * x / (width) - 1; //x-coordinate in camera space
       double rayDirX = mv->dirX + mv->planeX * cameraX;
       double rayDirY = mv->dirY + mv->planeY * cameraX;
-    
-      // printf("\n\nrayDirY : %f\n", rayDirY);
+      printf("\n\nrayDirY : %f\n", rayDirY);
       //while(1);
 
     //which box of the map we're in
@@ -158,8 +157,7 @@ void paint(move *mv)
        //length of ray from one x or y-side to next x or y-side
       double deltaDistX = fabs(1 / rayDirX);
       double deltaDistY = fabs(1 / rayDirY);
-
-      // printf("\n\nDeltadistY : %f\n", deltaDistY);
+      printf("\n\nDeltadistY : %f\n", deltaDistY);
      
       double perpWallDist;
 
@@ -192,7 +190,6 @@ void paint(move *mv)
         stepY = 1;
         sideDistY = (mapY + 1.0 - mv->posY) * deltaDistY;
       }
-        printf("sideDistX: %f\t sideDistY: %f\n", sideDistX, sideDistY);
            //perform DDA
       while (hit == 0)
       {
@@ -219,11 +216,7 @@ void paint(move *mv)
          perpWallDist = (mapX - mv->posX + (1 - stepX) / 2) / rayDirX;
       else
           perpWallDist = (mapY - mv->posY + (1 - stepY) / 2) / rayDirY; 
-    
 
-      // printf("player->perpWallDist: %f\n", perpWallDist);
-      //  printf("mapX: %d \t position.X: %f \t stepX: %d \t rayDirX: %f\n", mapX, mv->posX, stepX, rayDirX);
-      //  printf("mapY: %d \t position.Y: %f \t stepY: %d \t rayDirY: %f\n", mapY, mv->posY, stepY, rayDirY);
 
       //Calculate height of line to draw on screen
       int lineHeight = (int)(3 * height / perpWallDist);
@@ -266,7 +259,7 @@ void rotate(int key, move *mov)
 
   oldPlaneX = mov->planeX;
   oldDirX = mov->dirX;
-  float rot_angle = 0.045;
+  float rot_angle = 1.571;
   printf("\nKey: %d\n", key);
   if (key == 123)//left rotate
   {
@@ -334,8 +327,8 @@ int main(int ac/*argc*/, char **av/*argv*/)
   void *win;
   void *mlx;
   move mv;
-  mv.posX = 22;
-  mv.posY = 12;  //x and y start position
+  mv.posX = 2;
+  mv.posY = 2;  //x and y start position
   mv.dirX = -1;
   mv.dirY = 0; //initial direction vector
   mv.planeX = 0;

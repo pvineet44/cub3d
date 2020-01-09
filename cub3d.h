@@ -42,13 +42,35 @@ typedef	struct		s_prop_data
 	int				posY;
 }					t_prop_data;
 
-typedef	struct		s_point
+typedef struct		s_ray
 {
-	double x;
-	double y;
-}					point;
+	float			angle;
+	char			texture;
+	float			distance;
+	float			side_dist_x;
+	float			side_dist_y;
+	float			delta_dist_x;
+	float			delta_dist_y;
+	float			ray_dir_x;
+	float			ray_dir_y;
+	float			step_x;
+	float			step_y;
+	int				map_x;
+	int				map_y;
+}					ray;
 
-typedef struct		s_mlx
+typedef struct	s_keys {
+	int k_up;
+	int k_down;
+	int k_left;
+	int k_right;
+	int k_a;
+	int k_s;
+	int k_d;
+	int k_w;
+}				t_keys;
+
+typedef struct		s_libx
 {
 	void *mlx;
 	void *win;
@@ -57,23 +79,17 @@ typedef struct		s_mlx
 
 typedef struct		s_player
 {
-	char **map;
-	point position;
-	point direction;
-	point plane;
-	point rayDir;
-	point sideDist;
-	point deltaDist;
+	ray			**rays;
+	float angle;
 	double perpWallDist;
 	double cameraX;
 	int mapX;
 	int mapY;
-	int stepX;
-	int stepY;
-	void *mlx;
-	void *win;
-	char *title;
+	int posX;
+	int posY;
+	libx *libx;
 	t_prop_data *prop_data;
+	t_keys *keys;
 }					player;
 
 t_prop_data			cub3d_init(int fd);
@@ -89,11 +105,10 @@ player				*perform_dda(player *player);
 player    		    *set_sideDist(player *player, char c);
 player        	 	*calculate_step_dist(player *player);
 player   	        *init_raycast(t_prop_data *prop_data, player *player);
-point				get_direction(char direction);
-player				init_player(player player);
-point				init_point(point a);
-libx				init_libx(libx libx);
-player				create_window(int width, int height);
+player				init_player(player *player);
+libx		        *init_libx(libx *libx);
+libx				*create_window(int width, int height);
+player    		    *create_game(player *player);
 void				draw_scene(t_prop_data *prop_data, player *player);
 void				invoke_error(char sig);
 void				cub3d_engine(t_prop_data prop_data);
