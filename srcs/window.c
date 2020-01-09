@@ -14,24 +14,15 @@
 
 libx             *create_window(int width, int height)
 {
-    void *mlx;
-    void *win;
-    libx *libx;
+    libx    *libx;
+   	int	    config[3];
+    config[0] = 32;
+	config[1] = width * 4;
+	config[2] = 0;
 
-    libx->win = 0;
     libx = init_libx(libx);
-    if (width == 0 || height == 0)
-    {
-        ft_putstr("Resolution Error. Please check the resolution arguments.\n");
-        invoke_error('A');   
-    }
-    mlx = mlx_init();
-    if (mlx == NULL)
-        invoke_error('P');
-    win = mlx_new_window(mlx, width, height, libx->title);
-    if (win == NULL)
-        invoke_error('P');
-    libx->mlx = mlx;
-    libx->win = win;
+    libx->mlx = mlx_init();
+    libx->win = mlx_new_window(libx->mlx, width, height, libx->title);
+    libx->surface = mlx_new_image(libx->mlx, width, height);
     return(libx);
 }

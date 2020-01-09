@@ -72,9 +72,15 @@ typedef struct	s_keys {
 
 typedef struct		s_libx
 {
-	void *mlx;
-	void *win;
-	char *title;
+	void 			*mlx;
+	void 			*win;
+	char 			*title;
+	void 			*surface;
+	char			*data;
+	unsigned int	width;
+	unsigned int	height;
+	const char		*title;
+
 }					libx;
 
 typedef struct		s_player
