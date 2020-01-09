@@ -103,6 +103,7 @@ int main(int argc, const char *argv[])
 	t_prop_data prop_data = cub3d_init(fd); // call it parse
 	//check_prop_data(prop_data);
 	player *player;
+	player->draw = &draw;
 	player = create_game(player);
 	player->libx = create_window(prop_data.h_resolution, prop_data.v_resolution);
 	player->prop_data = &prop_data;

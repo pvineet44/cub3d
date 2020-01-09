@@ -50,6 +50,8 @@ void            update(player *player)
 
 void            draw(player *player)
 {
-    (void)player;
-    // update(player);
+    // (void)player;
+    update(player);
+  	mlx_clear_window(player->libx->mlx, player->libx->win);
+
 }

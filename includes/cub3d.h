@@ -20,7 +20,8 @@
 # include "get_next_line.h"
 
 # define ROTATE_SPEED 0.3
-
+# define RAYS 100
+# define PLAYER_SPEED 0.1
 typedef	struct		s_prop_data
 {
 	int				h_resolution;
@@ -59,7 +60,7 @@ typedef struct		s_ray
 	float			step_y;
 	int				map_x;
 	int				map_y;
-}					ray;
+}					t_ray;
 
 typedef struct	s_keys {
 	int k_up;
@@ -86,7 +87,7 @@ typedef struct		s_libx
 
 typedef struct		s_player
 {
-	ray			**rays;
+	t_ray			**rays;
 	float angle;
 	double perpWallDist;
 	double cameraX;
@@ -97,6 +98,7 @@ typedef struct		s_player
 	libx *libx;
 	t_prop_data *prop_data;
 	t_keys *keys;
+	void		(*draw)(struct s_player *);
 }					player;
 
 t_prop_data			cub3d_init(int fd);
@@ -130,5 +132,18 @@ int					ft_atoi(char *str);
 int					ft_free_str(char *str);
 int					key_hook(int key,player *player);
 int 				validate_map(t_prop_data *prop_data);
+float				check_angle(float a, float b);
+float				deg_to_rad(float a);
+void				rotate_ray_array(t_ray **rays, float angle);
+void 				go(player *player, int direction);
+void				rotate(player *player, int direction);
+int key_pressed(int key, player *player);
+int key_released(int key, player *player);
+void            draw(player *player);
+
+
+
+
+
 
 #endif
