@@ -22,6 +22,9 @@
 # define ROTATE_SPEED 0.3
 # define RAYS 100
 # define PLAYER_SPEED 0.1
+# ifndef INF
+#  define INF 100000000.0
+# endif
 typedef	struct		s_prop_data
 {
 	int				h_resolution;
@@ -58,6 +61,7 @@ typedef struct		s_ray
 	float			ray_dir_y;
 	float			step_x;
 	float			step_y;
+	float			wall_x;
 	int				map_x;
 	int				map_y;
 }					t_ray;
@@ -100,8 +104,6 @@ typedef struct		s_player
 	double cameraX;
 	int mapX;
 	int mapY;
-	int posX;
-	int posY;
 	libx *libx;
 	t_prop_data *prop_data;
 	t_keys *keys;
@@ -147,7 +149,11 @@ void				rotate(player *player, int direction);
 int key_pressed(int key, player *player);
 int key_released(int key, player *player);
 void            draw(player *player);
-
+void    draw_rect(t_prop_data *prop_data, t_rect rect, unsigned char color[4]);
+void    clear_data(player *player);
+void    draw_pixel(player *player, unsigned int x, unsigned int y,\
+unsigned char color[4]);
+void       raycast(player *player);
 
 
 

@@ -25,8 +25,6 @@ player          *set_direction(player *player)
 player          *create_game(player *player)
 {
     player = set_direction(player);
-    player->posX = player->prop_data->posX;
-    player->posY = player->prop_data->posY;
     return (player);
 }
 
@@ -53,5 +51,6 @@ void            draw(player *player)
     // (void)player;
     update(player);
   	mlx_clear_window(player->libx->mlx, player->libx->win);
+	clear_data(player);
 
 }

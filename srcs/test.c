@@ -105,7 +105,7 @@ int main(int argc, const char *argv[])
 	player *player;
 	player->draw = &draw;
 	player = create_game(player);
-	player->libx = create_window(prop_data.h_resolution, prop_data.v_resolution);
+	player->libx = create_window(prop_data.h_resolution, prop_data.v_resolution, player);
 	player->prop_data = &prop_data;
 	mlx_loop(player->libx->mlx);
 	// init_raycast(&prop_data, &player);
