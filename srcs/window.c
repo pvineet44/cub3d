@@ -36,7 +36,7 @@ libx             *create_window(int width, int height, player *player)
     mlx_hook(player->libx->win, 2, 1L << 0, &key_pressed, player);
 	mlx_hook(player->libx->win, 3, 1L << 1, &key_released, player);
 	// mlx_hook(player->libx->win, 17, 1L << 17, &program_exited, game);
-	mlx_loop_hook(player->libx->mlx, &loop_hook, game);
+	mlx_loop_hook(player->libx->mlx, &loop_hook, player);
 
     return(libx);
 }

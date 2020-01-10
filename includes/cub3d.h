@@ -73,6 +73,13 @@ typedef struct	s_keys {
 	int k_w;
 }				t_keys;
 
+typedef struct	s_rect {
+	int x;
+	int y;
+	int width;
+	int height;
+}				t_rect;
+
 typedef struct		s_libx
 {
 	void 			*mlx;
@@ -116,7 +123,7 @@ player        	 	*calculate_step_dist(player *player);
 player   	        *init_raycast(t_prop_data *prop_data, player *player);
 player				init_player(player *player);
 libx		        *init_libx(libx *libx);
-libx				*create_window(int width, int height);
+libx				*create_window(int width, int height, player *player);
 player    		    *create_game(player *player);
 void				draw_scene(t_prop_data *prop_data, player *player);
 void				invoke_error(char sig);
