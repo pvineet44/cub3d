@@ -12,7 +12,7 @@
 
 #include "../includes/cub3d.h"
 
-void    draw_rect(t_prop_data *prop_data, t_rect rect, unsigned char color[4])
+void    draw_rect(player *player, t_rect rect, unsigned char color[4])
 {
     int i;
 	int j;
@@ -22,7 +22,7 @@ void    draw_rect(t_prop_data *prop_data, t_rect rect, unsigned char color[4])
 	{
 		j = -1;
 		while (++j < rect.height)
-			draw_pixel(prop_data, rect.x + i, rect.y + j, color);
+			draw_pixel(player, rect.x + i, rect.y + j, color);
 	}
 }
 
@@ -39,7 +39,7 @@ void    clear_data(player *player)
     rect.y = 0;
     rect.width = player->prop_data->h_resolution;
     rect.height = player->prop_data->v_resolution;
-    draw_rect(player->prop_data, rect, color);
+    draw_rect(player, rect, color);
 }
 
 void    draw_pixel(player *player, unsigned int x, unsigned int y, \
@@ -56,24 +56,24 @@ unsigned char color[4])
 		player->libx->data[index + i] = color[i];
 }
 
-void	draw_ceil_ground(t_prop_data *prop_data)
+void	draw_ceil_ground(player *player)
 {
 	t_rect rect;
     unsigned char color[4];
 
-    color[0] = prop_data->c_red;
-    color[1] = prop_data->c_green;
-    color[2] = prop_data->c_blue;
+    color[0] = player->prop_data->c_red;
+    color[1] = player->prop_data->c_green;
+    color[2] = player->prop_data->c_blue;
     color[3] = 1;
 	rect.x = 0;
 	rect.y = 0;
-	rect.height = prop_data->v_resolution / 2;
-	rect.width = prop_data->h_resolution;
-	draw_rect(prop_data, rect, color);
+	rect.height = player->prop_data->v_resolution / 2;
+	rect.width = player->prop_data->h_resolution;
+	draw_rect(player, rect, color);
 	rect.y = rect.height;
-    color[0] = prop_data->f_red;
-    color[1] = prop_data->f_green;
-    color[2] = prop_data->f_blue;
+    color[0] = player->prop_data->f_red;
+    color[1] = player->prop_data->f_green;
+    color[2] = player->prop_data->f_blue;
     color[3] = 1;
-	draw_rect(prop_data, rect, color);
+	draw_rect(player, rect, color);
 }

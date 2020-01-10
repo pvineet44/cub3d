@@ -95,18 +95,18 @@ void			invoke_error(char sig)
 	exit(0);
 }
 
-t_prop_data		set_prop_data(t_prop_data prop_data, char *line)
+t_prop_data		set_prop_data(t_prop_data prop_data, char *line, void*mlx)
 {
 	if (line[0] == '\0')
 		return (prop_data);
 	if (line[0] == 'R')
 		prop_data = parse_resolution(&prop_data, &line[1]);
 	else if (line[0] == 'N' || (line[0] == 'S' && line[1] == 'O'))
-		prop_data = parse_texture(&prop_data, line[0], &line[2]);
+		prop_data = parse_texture(&prop_data, line[0], &line[2], mlx);
 	else if (line[0] == 'E' || line[0] == 'W')
-		prop_data = parse_texture(&prop_data, line[0], &line[2]);
+		prop_data = parse_texture(&prop_data, line[0], &line[2], mlx);
 	else if (line[0] == 'S')
-		prop_data = parse_texture(&prop_data, 'P', &line[2]);
+		prop_data = parse_texture(&prop_data, 'P', &line[2], mlx);
 	else if (line[0] == 'F')
 		prop_data = parse_floor(&prop_data, &line[2]);
 	else if (line[0] == 'C')
@@ -119,7 +119,7 @@ t_prop_data		set_prop_data(t_prop_data prop_data, char *line)
 	return (prop_data);
 }
 
-t_prop_data		cub3d_init(int fd)
+t_prop_data		cub3d_init(int fd, void *mlx)
 {
 	char		*line;
 	t_prop_data prop_data;
@@ -131,7 +131,7 @@ t_prop_data		cub3d_init(int fd)
 	line = NULL;
 	while (get_next_line(fd, &line) > 0)
 	{
-		prop_data = set_prop_data(prop_data, line);
+		prop_data = set_prop_data(prop_data, line, mlx);
 	}
 	if (validate_map(&prop_data) == 0)
 		invoke_error('M');

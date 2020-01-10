@@ -34,35 +34,35 @@ int			ft_isspace(char c)
 	return (0);
 }
 
-int			ft_isdigit(char c)
-{
-	if (c >= '0' && c <= '9')
-		return (1);
-	return (0);
-}
+// int			ft_isdigit(char c)
+// {
+// 	if (c >= '0' && c <= '9')
+// 		return (1);
+// 	return (0);
+// }
 
-int			ft_atoi(char *str)
-{
-	int val;
-	int neg;
-	int i;
+// int			ft_atoi(char *str)
+// {
+// 	int val;
+// 	int neg;
+// 	int i;
 
-	i = 0;
-	val = 0;
-	neg = 1;
-	if (str[0] == '-')
-		neg = -1;
-	if (str[i] == '-' || str[i] == '+')
-		i++;
-	while (str && str[i] && ft_isdigit(str[i]))
-	{
-		val = val * 10 + (str[i] - '0');
-		i++;
-	}
-	return (val * neg);
-}
+// 	i = 0;
+// 	val = 0;
+// 	neg = 1;
+// 	if (str[0] == '-')
+// 		neg = -1;
+// 	if (str[i] == '-' || str[i] == '+')
+// 		i++;
+// 	while (str && str[i] && ft_isdigit(str[i]))
+// 	{
+// 		val = val * 10 + (str[i] - '0');
+// 		i++;
+// 	}
+// 	return (val * neg);
+// }
 
-int		ft_isalpha(int c)
-{
-	return (c >= 65 && c <= 90) || (c >= 97 && c <= 122);
-}
+// int		ft_isalpha(int c)
+// {
+// 	return (c >= 65 && c <= 90) || (c >= 97 && c <= 122);
+// }

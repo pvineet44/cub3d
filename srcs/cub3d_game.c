@@ -45,18 +45,3 @@ void            update(player *player)
         (void)player;
 
 }
-
-void            draw(player *player)
-{
-    // (void)player;
-    update(player);
-  	mlx_clear_window(player->libx->mlx, player->libx->win);
-	clear_data(player);
-    raycast(player);
-   	draw_ceil_ground(player->prop_data);
-    draw_rays(player);
-    mlx_put_image_to_window(player->libx->mlx, player->libx->win,
-			player->libx->surface, 0, 0);
-    
-
-}

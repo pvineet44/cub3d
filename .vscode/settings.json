@@ -6,6 +6,8 @@
         "algorithm": "c",
         "ios": "c",
         "memory": "c",
-        "type_traits": "c"
+        "type_traits": "c",
+        "cub3d.h": "c",
+        "libft.h": "c"
     }
 }

@@ -13,38 +13,38 @@
 #include "../includes/cub3d.h"
 #include <stdio.h>
 
-void		check_prop_data(t_prop_data prop_data)
-{
-	int i;
-	int j;
-	i = -1;
-	j = 0;
+// void		check_prop_data(t_prop_data prop_data)
+// {
+// 	int i;
+// 	int j;
+// 	i = -1;
+// 	j = 0;
 	
-	printf("h : %d\n", prop_data.h_resolution);
-	printf("v : %d\n", prop_data.v_resolution);
-	printf("NO: %s\n", prop_data.no_texture);
-	printf("SO: %s\n", prop_data.so_texture);
-	printf("EA: %s\n", prop_data.ea_texture);
-	printf("WE: %s\n", prop_data.we_texture);
-	printf("S: %s\n", prop_data.sprite_texture);
-	printf("F: %d,%d,%d\n", prop_data.f_red, prop_data.f_green, prop_data.f_blue);
-	printf("C: %d,%d,%d\n", prop_data.c_red, prop_data.c_green, prop_data.c_blue);
-	printf("posX: %d\n", prop_data.posX);
-	printf("posY: %d\n", prop_data.posY);
-	printf("direction: %c\n", prop_data.direction);
-	while(j < prop_data.map_height)
-	{
-		i = 0;
-		while (i < prop_data.map_width)
-		{
-			write(1, &prop_data.map[i][j], 1);
-			//printf("%c", prop_data.map[i][j]);
-			i++;
-		}
-		write(1, "\n", 1);
-		j++;
-	}
-}
+// 	printf("h : %d\n", prop_data.h_resolution);
+// 	printf("v : %d\n", prop_data.v_resolution);
+// 	printf("NO: %s\n", prop_data.no_texture);
+// 	printf("SO: %s\n", prop_data.so_texture);
+// 	printf("EA: %s\n", prop_data.ea_texture);
+// 	printf("WE: %s\n", prop_data.we_texture);
+// 	printf("S: %s\n", prop_data.sprite_texture);
+// 	printf("F: %d,%d,%d\n", prop_data.f_red, prop_data.f_green, prop_data.f_blue);
+// 	printf("C: %d,%d,%d\n", prop_data.c_red, prop_data.c_green, prop_data.c_blue);
+// 	printf("posX: %d\n", prop_data.posX);
+// 	printf("posY: %d\n", prop_data.posY);
+// 	printf("direction: %c\n", prop_data.direction);
+// 	while(j < prop_data.map_height)
+// 	{
+// 		i = 0;
+// 		while (i < prop_data.map_width)
+// 		{
+// 			write(1, &prop_data.map[i][j], 1);
+// 			//printf("%c", prop_data.map[i][j]);
+// 			i++;
+// 		}
+// 		write(1, "\n", 1);
+// 		j++;
+// 	}
+// }
 
 // void		check_player_data(player player, t_prop_data prop_data)
 // {	
@@ -90,23 +90,46 @@ void		check_prop_data(t_prop_data prop_data)
 //   return 0;
 //   }
 
+void            draw(player *player)
+{
+    // (void)player;
+    update(player);
+  	mlx_clear_window(player->libx->mlx, player->libx->win);
+	clear_data(player);
+    raycast(player);
+   	draw_ceil_ground(player);
+    draw_rays(player);
+    mlx_put_image_to_window(player->libx->mlx, player->libx->win,
+			player->libx->surface, 0, 0);
+    
+
+}
+
 int main(int argc, const char *argv[])
 {
 	int fd;
-	
 	if (argc < 2)
 	{
 		ft_putstr("Map error. No Map supplied as argument\n");
 		exit(0);
 	}
 	fd = open(argv[1],O_RDONLY);
-	t_prop_data prop_data = cub3d_init(fd); // call it parse
-	//check_prop_data(prop_data);
 	player *player;
-	player->draw = &draw;
+	libx *libx;
+	void *mlx;
+	libx = ft_calloc(sizeof(libx), 1);
+	player = ft_calloc(sizeof(player), 1);
+	mlx = mlx_init();
+	libx->mlx = mlx;
+	player->libx = libx;
+	t_prop_data prop_data = cub3d_init(fd, player->libx->mlx); // call it parse
+
+	//check_prop_data(prop_data);
+
 	player = create_game(player);
-	player->libx = create_window(prop_data.h_resolution, prop_data.v_resolution, player);
+	player= create_window(prop_data.h_resolution, prop_data.v_resolution, player);
 	player->prop_data = &prop_data;
+	player->draw = &draw;
 	mlx_loop(player->libx->mlx);
 	// init_raycast(&prop_data, &player);
 	// //check_player_data(player, prop_data);

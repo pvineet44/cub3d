@@ -29,7 +29,7 @@ t_prop_data			parse_resolution(t_prop_data *prop_data, char *line)
 	return (*prop_data);
 }
 
-t_prop_data			parse_texture(t_prop_data *prop_data, char c, char *line)
+t_prop_data			parse_texture(t_prop_data *prop_data, char c, char *line, void *mlx)
 {
 	int			i;
 	char		*tmp;
@@ -40,15 +40,15 @@ t_prop_data			parse_texture(t_prop_data *prop_data, char c, char *line)
 		i++;
 	tmp = &line[i];
 	if (c == 'N')
-		prop_data->no_texture = ft_strdup(tmp);
+		prop_data->no_texture = load_texture(mlx, tmp);
 	else if (c == 'S')
-		prop_data->so_texture = ft_strdup(tmp);
+		prop_data->so_texture = load_texture(mlx, tmp);
 	else if (c == 'E')
-		prop_data->ea_texture = ft_strdup(tmp);
+		prop_data->ea_texture = load_texture(mlx, tmp);
 	else if (c == 'W')
-		prop_data->we_texture = ft_strdup(tmp);
+		prop_data->we_texture = load_texture(mlx, tmp);
 	else if (c == 'P')
-		prop_data->sprite_texture = ft_strdup(tmp);
+		prop_data->sprite_texture = load_texture(mlx, tmp);
 	return (*prop_data);
 }
 

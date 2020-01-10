@@ -18,6 +18,7 @@
 #include <stdlib.h>
 # include <unistd.h>
 # include "get_next_line.h"
+# include "../libft/libft.h"
 
 # define ROTATE_SPEED 0.3
 # define RAYS 100
@@ -25,29 +26,6 @@
 # ifndef INF
 #  define INF 100000000.0
 # endif
-typedef	struct		s_prop_data
-{
-	int				h_resolution;
-	int				v_resolution;
-	int				f_red;
-	int				f_blue;
-	int				f_green;
-	int				c_red;
-	int				c_blue;
-	int				c_green;
-	char			*no_texture;
-	char			*we_texture;
-	char			*so_texture;
-	char			*ea_texture;
-	char			*sprite_texture;
-	char			**map;
-	char			direction;
-	int				map_height;
-	int				map_width;
-	int				posX;
-	int				posY;
-}					t_prop_data;
-
 typedef struct	s_texture
 {
 	int				width;
@@ -56,6 +34,29 @@ typedef struct	s_texture
 	void			*ptr;
 	char			*data;
 }								t_texture;
+typedef	struct		s_prop_data
+{
+	unsigned int				h_resolution;
+	unsigned int				v_resolution;
+	int				f_red;
+	int				f_blue;
+	int				f_green;
+	int				c_red;
+	int				c_blue;
+	int				c_green;
+	t_texture			*no_texture;
+	t_texture			*we_texture;
+	t_texture			*so_texture;
+	t_texture			*ea_texture;
+	t_texture			*sprite_texture;
+	char			**map;
+	char			direction;
+	int				map_height;
+	int				map_width;
+	int				posX;
+	int				posY;
+}					t_prop_data;
+
 
 typedef struct		s_ray
 {
@@ -101,7 +102,7 @@ typedef struct		s_libx
 	char			*data;
 	unsigned int	width;
 	unsigned int	height;
-	const char		*title;
+	char		*title;
 
 }					libx;
 
@@ -119,11 +120,11 @@ typedef struct		s_player
 	void		(*draw)(struct s_player *);
 }					player;
 
-t_prop_data			cub3d_init(int fd);
-t_prop_data			set_prop_data(t_prop_data prop_data, char *line);
+t_prop_data		cub3d_init(int fd, void *mlx);
+t_prop_data			set_prop_data(t_prop_data prop_data, char *line, void*mlx);
 t_prop_data			init_prop_data(t_prop_data prop_data);
 t_prop_data			parse_resolution(t_prop_data *prop_data, char *line);
-t_prop_data			parse_texture(t_prop_data *prop_data, char c, char *line);
+t_prop_data			parse_texture(t_prop_data *prop_data, char c, char *line, void *mlx);
 t_prop_data			parse_floor(t_prop_data *prop_data, char *line);
 t_prop_data			parse_ceil(t_prop_data *prop_data, char *line);
 t_prop_data			parse_map(t_prop_data *prop_data, char *line);
@@ -134,7 +135,7 @@ player        	 	*calculate_step_dist(player *player);
 player   	        *init_raycast(t_prop_data *prop_data, player *player);
 player				init_player(player *player);
 libx		        *init_libx(libx *libx);
-libx				*create_window(int width, int height, player *player);
+player             *create_window(int width, int height, player *player);
 player    		    *create_game(player *player);
 void				draw_scene(t_prop_data *prop_data, player *player);
 void				invoke_error(char sig);
@@ -144,9 +145,6 @@ void           		draw_column(int x, int drawStart, int drawEnd, player *player);
 void				rotate(player *player, int direction);
 void 				walk(int key, player *player);
 int					ft_isspace(char c);
-int					ft_isdigit(char c);
-int					ft_isalpha(int c);
-int					ft_atoi(char *str);
 int					ft_free_str(char *str);
 int					key_hook(int key,player *player);
 int 				validate_map(t_prop_data *prop_data);
@@ -158,16 +156,16 @@ void				rotate(player *player, int direction);
 int key_pressed(int key, player *player);
 int key_released(int key, player *player);
 void            draw(player *player);
-void    draw_rect(t_prop_data *prop_data, t_rect rect, unsigned char color[4]);
+void    draw_rect(player *player, t_rect rect, unsigned char color[4]);
 void    clear_data(player *player);
 void    draw_pixel(player *player, unsigned int x, unsigned int y,\
 unsigned char color[4]);
 void       raycast(player *player);
-void	draw_ceil_ground(t_prop_data *prop_data);
+void	draw_ceil_ground(player *player);
 void			get_pixel_color(t_texture *texture, int x, int y, unsigned char *result);
 t_texture *load_texture(void *mlx_ptr, char *filename);
 void	draw_rays(player *player);
-
+void            update(player *player);
 
 
 #endif
