@@ -55,3 +55,25 @@ unsigned char color[4])
 	while (++i < 4)
 		player->libx->data[index + i] = color[i];
 }
+
+void	draw_ceil_ground(t_prop_data *prop_data)
+{
+	t_rect rect;
+    unsigned char color[4];
+
+    color[0] = prop_data->c_red;
+    color[1] = prop_data->c_green;
+    color[2] = prop_data->c_blue;
+    color[3] = 1;
+	rect.x = 0;
+	rect.y = 0;
+	rect.height = prop_data->v_resolution / 2;
+	rect.width = prop_data->h_resolution;
+	draw_rect(prop_data, rect, color);
+	rect.y = rect.height;
+    color[0] = prop_data->f_red;
+    color[1] = prop_data->f_green;
+    color[2] = prop_data->f_blue;
+    color[3] = 1;
+	draw_rect(prop_data, rect, color);
+}

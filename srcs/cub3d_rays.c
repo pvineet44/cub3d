@@ -98,3 +98,38 @@ void       raycast(player *player)
 		raycast_ray(player->prop_data, player->rays[i]);
 	}
 }
+
+void	draw_rays(player *player)
+{
+	int						i;
+	int						res;
+	int						d;
+	int						x;
+	int						y;
+	int						a;
+	unsigned char	color[4];
+
+	res = ceil(player->prop_data->h_resolution / RAYS);
+	i = -1;
+	while (++i < RAYS)
+	{
+			d = (int)(player->prop_data->v_resolution / player->rays[i]->distance);
+			x = i * res;
+			while (x < i * res + res)
+			{
+				y = (int)(player->prop_data->v_resolution / 2 - d / 2);
+				a = 0;
+				while (y < (int)(player->prop_data->v_resolution / 2 - d / 2) + d)
+				{
+					get_pixel_color(player->rays[i]->texture,
+						player->rays[i]->wall_x * player->rays[i]->texture->width,
+						(int)floor((float)(a) / (float)(d) * player->rays[i]->texture->height),
+						color);
+					draw_pixel(player, x, y, color);
+					y++;
+					a++;
+				}
+				x++;
+			}
+	}
+}

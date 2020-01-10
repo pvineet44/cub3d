@@ -48,10 +48,18 @@ typedef	struct		s_prop_data
 	int				posY;
 }					t_prop_data;
 
+typedef struct	s_texture
+{
+	int				width;
+	int				height;
+	char			*filename;
+	void			*ptr;
+	char			*data;
+}								t_texture;
+
 typedef struct		s_ray
 {
 	float			angle;
-	char			texture;
 	float			distance;
 	float			side_dist_x;
 	float			side_dist_y;
@@ -64,6 +72,7 @@ typedef struct		s_ray
 	float			wall_x;
 	int				map_x;
 	int				map_y;
+	t_texture *texture;
 }					t_ray;
 
 typedef struct	s_keys {
@@ -154,8 +163,10 @@ void    clear_data(player *player);
 void    draw_pixel(player *player, unsigned int x, unsigned int y,\
 unsigned char color[4]);
 void       raycast(player *player);
-
-
+void	draw_ceil_ground(t_prop_data *prop_data);
+void			get_pixel_color(t_texture *texture, int x, int y, unsigned char *result);
+t_texture *load_texture(void *mlx_ptr, char *filename);
+void	draw_rays(player *player);
 
 
 
