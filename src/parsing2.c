@@ -32,6 +32,8 @@ void		handle_line_info(char *line, t_info *info)
 
 void		parse_resolution(char *line, t_info *info)
 {
+	if (info->height != 0 || info->width != 0)
+		parsing_error(info, 'a');
 	line += 2;
 	info->width = min(ft_atoi(line), 2560);
 	while (ft_isdigit(*line))
