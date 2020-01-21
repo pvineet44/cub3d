@@ -21,7 +21,7 @@
 # include "mlx.h"
 
 # define PLAYER_SPEED 0.1
-# define ROTATE_SPEED 3.0
+# define ROTATE_SPEED 5.0
 # define RAYS 200.0
 # define FOV 45.0
 # define JUMP_HEIGHT 10.0
