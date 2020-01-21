@@ -1,6 +1,6 @@
 OS := $(shell uname)
 
-BINARY = Cub3D
+BINARY = cub3D
 
 LIBFT = ./libft/libft.a
 LIBFT_SRC := $(wildcard libft/*.c)

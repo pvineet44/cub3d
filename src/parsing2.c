@@ -65,21 +65,28 @@ void		parse_texture(char *line, t_info *info)
 void		parse_color(char *line, t_info *info)
 {
 	char			type;
-	unsigned char	res[3];
+	int				res[3];
+	int				i;
 
+	i = 0;
 	type = *line;
 	line += 2;
-	res[0] = (unsigned char)ft_atoi(line);
+	res[0] = ft_atoi(line);
 	while (ft_isdigit(*line))
 		line++;
 	line += (*line == ',');
-	res[1] = (unsigned char)ft_atoi(line);
+	res[1] = ft_atoi(line);
 	while (ft_isdigit(*line))
 		line++;
 	line += (*line == ',');
-	res[2] = (unsigned char)ft_atoi(line);
+	res[2] = ft_atoi(line);
+	while (++i < 3)
+		if (res[i] < 0 || res[i] > 255)
+			parsing_error(info, 'a');
 	if (type == 'C')
-		set_color(info->ceil, res[0], res[1], res[2]);
+		set_color(info->ceil, (unsigned char)res[0], (unsigned char)res[1],
+		(unsigned char)res[2]);
 	else if (type == 'F')
-		set_color(info->floor, res[0], res[1], res[2]);
+		set_color(info->floor, (unsigned char)res[0], (unsigned char)res[1],
+		(unsigned char)res[2]);
 }
