@@ -12,7 +12,7 @@
 
 #include "cub3d.h"
 
-void	update(t_game *game)
+void		update(t_game *game)
 {
 	if (game->keys->k_right)
 		rotate(game, 1);
@@ -29,7 +29,7 @@ void	update(t_game *game)
 	update_jump(game);
 }
 
-void	draw(t_game *game)
+void		draw(t_game *game)
 {
 	update(game);
 	mlx_clear_window(game->window->mlx_ptr, game->window->win_ptr);
@@ -41,12 +41,52 @@ void	draw(t_game *game)
 	draw_hud(game);
 	if (game->screenshot)
 		stop_game(game);
-	if (!game->screenshot)
-		mlx_put_image_to_window(game->window->mlx_ptr, game->window->win_ptr,
+	mlx_put_image_to_window(game->window->mlx_ptr, game->window->win_ptr,
 		game->window->surface, 0, 0);
 }
 
-int		main(int argc, char **argv)
+t_window	*create_screenshot_window(t_info *info, const char *title)
+{
+	t_window	*res;
+	int			config[3];
+
+	if (!(res = ft_calloc(sizeof(t_window), 1)))
+		return (NULL);
+	config[0] = 32;
+	config[1] = info->width * 4;
+	config[2] = 0;
+	res->width = info->width;
+	res->height = info->height;
+	res->title = title;
+	res->mlx_ptr = info->tmp_mlx_ptr;
+	res->win_ptr = NULL;
+	res->surface = mlx_new_image(res->mlx_ptr, info->width, info->height);
+	res->data = mlx_get_data_addr(res->surface,
+			&config[0], &config[1], &config[2]);
+	return (res);
+}
+
+void		take_screenshot(t_info *info)
+{
+	t_game *res;
+
+	if (!(res = ft_calloc(sizeof(t_game), 1)))
+		return ;
+	res->world = create_world(info);
+	res->screenshot = 1;
+	res->keys = create_keys();
+	res->draw = NULL;
+	res->window = create_screenshot_window(info, "Cube3d Screenshot");
+	clear_data(res->window);
+	raycast(res->world);
+	draw_ceil_ground(res);
+	draw_rays(res);
+	draw_sprites(res);
+	draw_hud(res);
+	stop_game(res);
+}
+
+int			main(int argc, char **argv)
 {
 	t_game	*game;
 	t_info	*info;
@@ -57,7 +97,7 @@ int		main(int argc, char **argv)
 	if (argc == 3)
 	{
 		if ((ft_strlen(argv[2]) == 6) && ft_strncmp(argv[2], "--save", 6) == 0)
-			info->screenshot = 1;
+			take_screenshot(info);
 		else
 			parsing_error(NULL, 'a');
 	}
