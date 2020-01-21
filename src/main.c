@@ -54,10 +54,13 @@ int		main(int argc, char **argv)
 	if (argc < 2 || argc > 3)
 		parsing_error(NULL, 'a');
 	info = parse(argv[1]);
-	if (argc == 3 && ft_strncmp(argv[2], "-save", 5) == 0)
-		info->screenshot = 1;
-	if (argc == 3 && ft_strncmp(argv[2], "-save", 5) != 0)
-		parsing_error(NULL, 'a');
+	if (argc == 3)
+	{
+		if ((ft_strlen(argv[2]) == 6) && ft_strncmp(argv[2], "--save", 6) == 0)
+			info->screenshot = 1;
+		else
+			parsing_error(NULL, 'a');
+	}
 	game = create_game(info, "Cub3D-42");
 	destroy_info(info);
 	game->draw = &draw;
