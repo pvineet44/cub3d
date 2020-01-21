@@ -73,8 +73,6 @@ static void	draw_ray(t_game *game, t_raycasting_data data)
 void		draw_rays(t_game *game)
 {
 	t_raycasting_data	data;
-	int y_data = 0;
-	int x_data = 0;
 
 	data.res = ceil(game->window->width / RAYS);
 	data.i = -1;
@@ -83,14 +81,13 @@ void		draw_rays(t_game *game)
 		data.d = (int)(game->window->height /
 				game->world->rays[data.i]->distance);
 		data.x = data.i * data.res;
-		x_data = data.x + data.res;
-		y_data = (game->window->height * 0.5) - (data.d * 0.5) + game->world->pz + data.d;
-		while (data.x < x_data)
+		while (data.x < data.i * data.res + data.res)
 		{
-			data.y = (int)((game->window->height * 0.5) - (data.d * 0.5))
+			data.y = (int)(game->window->height / 2 - data.d / 2)
 				+ game->world->pz;
 			data.a = 0;
-			while (data.y < y_data)
+			while (data.y < (int)(game->window->height / 2 - data.d / 2)
+					+ game->world->pz + data.d)
 			{
 				draw_ray(game, data);
 				data.y++;
