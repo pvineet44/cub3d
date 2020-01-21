@@ -56,6 +56,8 @@ int			check_map(t_info *info)
 
 void		check_parse(t_info *info)
 {
+	if (info->width <= 0 || info->height <= 0)
+		parsing_error(info, 'a');
 	if (info->texture_n == NULL || info->texture_s == NULL)
 		parsing_error(info, 'a');
 	if (info->texture_e == NULL || info->texture_w == NULL)

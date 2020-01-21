@@ -54,8 +54,6 @@ void	handle_line(char *line, t_info *info)
 
 int		check_parsing(t_info *info)
 {
-	if (info->width <= 0 || info->height <= 0)
-		return (0);
 	if (!check_map(info))
 		return (0);
 	return (1);
