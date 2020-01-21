@@ -19,7 +19,7 @@ static void	destroy_node(void *content)
 
 void		destroy_info(t_info *info)
 {
-	if (info && info->map_tmp)
+	if (info && info->map_tmp && info->map_started)
 		ft_lstclear(&info->map_tmp, &destroy_node);
 	free(info);
 }

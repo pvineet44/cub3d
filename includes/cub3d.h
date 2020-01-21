@@ -234,6 +234,8 @@ void			parse_color(char *line, t_info *info);
 void			destroy_info(t_info *info);
 int				check_map(t_info *info);
 void			create_map(t_info *info);
+void			check_parse(t_info *info);
+
 
 /*
 ** Texture functions

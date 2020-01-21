@@ -94,6 +94,7 @@ int			main(int argc, char **argv)
 	if (argc < 2 || argc > 3)
 		parsing_error(NULL, 'a');
 	info = parse(argv[1]);
+	check_parse(info);
 	if (argc == 3)
 	{
 		if ((ft_strlen(argv[2]) == 6) && ft_strncmp(argv[2], "--save", 6) == 0)

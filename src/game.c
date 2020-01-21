@@ -90,7 +90,7 @@ void		stop_game(t_game *game)
 	destroy_texture(game->window->mlx_ptr, game->world->texture_o);
 	destroy_texture(game->window->mlx_ptr, game->world->texture_sprite);
 	if (game->screenshot == 0)
-	 	mlx_destroy_window(game->window->mlx_ptr, game->window->win_ptr);
+		mlx_destroy_window(game->window->mlx_ptr, game->window->win_ptr);
 	mlx_destroy_image(game->window->mlx_ptr, game->window->surface);
 	free_2d_array(game->world->map, game->world->mx);
 	free_ray_array(game->world->rays);

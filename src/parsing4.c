@@ -53,3 +53,17 @@ int			check_map(t_info *info)
 	info->map_height = ft_lstsize(info->map_tmp);
 	return (1);
 }
+
+void		check_parse(t_info *info)
+{
+	if (info->texture_n == NULL || info->texture_s == NULL)
+		parsing_error(info, 'a');
+	if (info->texture_e == NULL || info->texture_w == NULL)
+		parsing_error(info, 'a');
+	if (info->texture_sprite == NULL)
+		parsing_error(info, 'a');
+	if (info->ceil[0] == 0 && info->ceil[1] == 0 && info->ceil[2] == 0)
+		parsing_error(info, 'a');
+	if (info->floor[0] == 0 && info->floor[1] == 0 && info->floor[2] == 0)
+		parsing_error(info, 'a');
+}

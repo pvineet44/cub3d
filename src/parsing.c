@@ -56,9 +56,6 @@ int		check_parsing(t_info *info)
 {
 	if (info->width <= 0 || info->height <= 0)
 		return (0);
-	if (!info->texture_n->ptr || !info->texture_s->ptr || !info->texture_w->ptr
-		|| !info->texture_e->ptr || !info->texture_sprite->ptr)
-		return (0);
 	if (!check_map(info))
 		return (0);
 	return (1);

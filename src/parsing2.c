@@ -48,16 +48,18 @@ void		parse_texture(char *line, t_info *info)
 	while (ft_isalpha(*line))
 		line++;
 	line++;
-	if (type[0] == 'N')
+	if (type[0] == 'N' && (info->texture_n == NULL))
 		info->texture_n = load_texture(info->tmp_mlx_ptr, line);
-	if (type[0] == 'E')
+	else if (type[0] == 'E' && (info->texture_e == NULL))
 		info->texture_e = load_texture(info->tmp_mlx_ptr, line);
-	if (type[0] == 'W')
+	else if (type[0] == 'W' && (info->texture_w == NULL))
 		info->texture_w = load_texture(info->tmp_mlx_ptr, line);
-	if (type[0] == 'S' && type[1] == 'O')
+	else if (type[0] == 'S' && type[1] == 'O' && (info->texture_s == NULL))
 		info->texture_s = load_texture(info->tmp_mlx_ptr, line);
-	if (type[0] == 'S' && type[1] == ' ')
+	else if (type[0] == 'S' && type[1] == ' ' && (info->texture_sprite == NULL))
 		info->texture_sprite = load_texture(info->tmp_mlx_ptr, line);
+	else
+		parsing_error(info, 'a');
 }
 
 void		parse_color(char *line, t_info *info)
