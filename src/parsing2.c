@@ -63,7 +63,8 @@ void		parse_texture(char *line, t_info *info)
 	type[1] = line[1];
 	while (ft_isalpha(*line))
 		line++;
-	line++;
+	while (ft_isspace(*line))
+		line++;
 	if (type[0] == 'N' && (info->texture_n == NULL))
 		info->texture_n = load_texture(info->tmp_mlx_ptr, line);
 	else if (type[0] == 'E' && (info->texture_e == NULL))

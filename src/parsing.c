@@ -75,5 +75,7 @@ void	parsing_error(t_info *info, char c)
 		write(1, "Player missing in cub\n", 23);
 	if (c == 'r')
 		write(1, "Two player positions in cub\n", 29);
+	if (c == 't')
+		write(1, "Problem in texture\n", 18);
 	exit(0);
 }

@@ -1,10 +1,10 @@
 R 800 600
 
 
-NO ./res/wall3.xpm
+NO ./res/wall03.xpm
 SO ./res/wall4.xpm
 WE ./res/brickimg.xpm
-EA ./res/wall1.xpm
+EA  ./res/wall1.xpm
 S ./res/barrel.xpm
 
 C 94,47,18

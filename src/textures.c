@@ -12,12 +12,24 @@
 
 #include <cub3d.h>
 
+int			check_file_exists(char *filename)
+{
+	int fd;
+
+	fd = open(filename, O_RDONLY);
+	if (fd < 0)
+		return (0);
+	return (1);
+}
+
 t_texture	*load_texture(void *mlx_ptr, char *filename)
 {
 	t_texture	*res;
 	int			config[3];
 
 	res = ft_calloc(sizeof(t_texture), 1);
+	if (check_file_exists(filename) == 0)
+		return (NULL);
 	res->ptr = mlx_xpm_file_to_image(mlx_ptr, filename,
 			&(res->width), &(res->height));
 	if (!res->ptr)
