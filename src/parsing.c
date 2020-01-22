@@ -54,7 +54,7 @@ void	handle_line(char *line, t_info *info)
 
 int		check_parsing(t_info *info)
 {
-	if (!check_map(info))
+	if (info->map_started==1 && !check_map(info))
 		return (0);
 	return (1);
 }
@@ -69,5 +69,7 @@ void	parsing_error(t_info *info, char c)
 		write(1, "Invalid map\n", 13);
 	if (c == 'f')
 		write(1, "Can't open file\n", 17);
+	if (c == 'i')
+		write(1, "Map missing in cub\n", 20);
 	exit(0);
 }
