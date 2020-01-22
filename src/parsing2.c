@@ -6,7 +6,7 @@
 /*   By: vparekh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/19 13:06:52 by vparekh           #+#    #+#             */
-/*   Updated: 2020/01/19 13:06:54 by vparekh          ###   ########.fr       */
+/*   Updated: 2020/01/21 18:52:12 by vparekh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,30 @@ void		handle_line_map(char *line, t_info *info)
 
 void		handle_line_info(char *line, t_info *info)
 {
-	char type;
+	char	type;
+	int		i;
+	static int c;
+	static int f;
 
+	i = -1;
 	type = *line;
 	if (type == 'R')
 		parse_resolution(line, info);
 	if (type == 'N' || type == 'S' || type == 'W' || type == 'E')
 		parse_texture(line, info);
 	if (type == 'C' || type == 'F')
+	{
+		if (type == 'C' && c != 0)
+			parsing_error(info, 'a');
+		if (type == 'F' && f != 0)
+			parsing_error(info, 'a');
+		if (type == 'C')
+			c++;
+		if (type == 'F')
+			f++;
+		
 		parse_color(line, info);
+	}
 }
 
 void		parse_resolution(char *line, t_info *info)

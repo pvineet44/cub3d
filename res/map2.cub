@@ -6,8 +6,8 @@ WE ./res/brickimg.xpm
 EA ./res/wall1.xpm
 S ./res/barrel.xpm
 
-F 94, 47, 18
 C 133,195,237
+F 94, 47, 18
 
 
 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
