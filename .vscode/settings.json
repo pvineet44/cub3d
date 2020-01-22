@@ -8,6 +8,18 @@
         "memory": "c",
         "type_traits": "c",
         "cub3d.h": "c",
-        "libft.h": "c"
+        "libft.h": "c",
+        "__functional_base": "c",
+        "__functional_base_03": "c",
+        "__hash_table": "c",
+        "__tuple": "c",
+        "array": "c",
+        "chrono": "c",
+        "functional": "c",
+        "limits": "c",
+        "ratio": "c",
+        "tuple": "c",
+        "utility": "c",
+        "locale": "c"
     }
 }

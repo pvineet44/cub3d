@@ -28,28 +28,46 @@ static int	check_line_ones(char *line)
 	return (1);
 }
 
+int			calculate_length(char *str)
+{
+	int i;
+	int c;
+
+	c = 0;
+	i = 0;
+	while(str && str[i])
+	{
+		if (!ft_isspace(str[i]))
+			c++;
+		i++;
+	}
+	return (c);
+}
+
 int			check_map(t_info *info)
 {
-	unsigned int	target;
+	int				target;
 	t_list			*ptr;
+	int				end;
 
 	ptr = info->map_tmp;
-	target = ft_strlen(ptr->content);
+	target = calculate_length(ptr->content);
+	end = ft_strlen(ptr->content);
 	if (!check_line_ones(ptr->content))
 		return (0);
 	ptr = ptr->next;
 	while (ptr)
 	{
-		if (ft_strlen(ptr->content) != target)
+		if (calculate_length(ptr->content) != target)
 			return (0);
 		if (((char*)ptr->content)[0] != '1' ||
-				((char*)ptr->content)[target - 1] != '1')
+				((char*)ptr->content)[end - 1] != '1')
 			return (0);
 		if (!ptr->next && !check_line_ones(ptr->content))
 			return (0);
 		ptr = ptr->next;
 	}
-	info->map_width = (target + 1) / 2;
+	info->map_width = target;
 	info->map_height = ft_lstsize(info->map_tmp);
 	return (1);
 }

@@ -62,7 +62,9 @@ void		create_map(t_info *info)
 		while (x < info->map_width)
 		{
 			create_map_helper(line, info, x, y);
-			line += 2;
+			line++;
+			while(ft_isspace(line[0]))
+				line++;
 			x++;
 		}
 		ptr = ptr->next;
