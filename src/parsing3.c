@@ -26,11 +26,17 @@ void		destroy_info(t_info *info)
 
 static void	create_map_helper(char *line, t_info *info, int x, int y)
 {
+	static int check;
+
 	if (*line == 'N' || *line == 'S' || *line == 'E' || *line == 'W')
 	{
+		if (check == 1)
+			parsing_error(info, 'r');
 		info->px = x;
 		info->py = y;
 		info->orientation = *line;
+		check = 1;
+		info->map_started = 2;
 	}
 	else
 		info->map[x][y] = ft_atoi(line);

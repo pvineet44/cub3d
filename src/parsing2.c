@@ -19,10 +19,10 @@ void		handle_line_map(char *line, t_info *info)
 
 void		handle_line_info(char *line, t_info *info)
 {
-	char	type;
-	int		i;
-	static int c;
-	static int f;
+	char				type;
+	int					i;
+	static	int			c;
+	static	int			f;
 
 	i = -1;
 	type = *line;
@@ -40,7 +40,6 @@ void		handle_line_info(char *line, t_info *info)
 			c++;
 		if (type == 'F')
 			f++;
-		
 		parse_color(line, info);
 	}
 }

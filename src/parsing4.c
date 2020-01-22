@@ -56,6 +56,8 @@ int			check_map(t_info *info)
 
 void		check_parse(t_info *info)
 {
+	if (info->map_started != 2)
+		parsing_error(info, 'p');
 	if (info->map_started == 0)
 		parsing_error(info, 'i');
 	if (info->width <= 0 || info->height <= 0)

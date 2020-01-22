@@ -54,7 +54,7 @@ void	handle_line(char *line, t_info *info)
 
 int		check_parsing(t_info *info)
 {
-	if (info->map_started==1 && !check_map(info))
+	if (info->map_started == 1 && !check_map(info))
 		return (0);
 	return (1);
 }
@@ -71,5 +71,9 @@ void	parsing_error(t_info *info, char c)
 		write(1, "Can't open file\n", 17);
 	if (c == 'i')
 		write(1, "Map missing in cub\n", 20);
+	if (c == 'p')
+		write(1, "Player missing in cub\n", 23);
+	if (c == 'r')
+		write(1, "Two player positions in cub\n", 29);
 	exit(0);
 }
