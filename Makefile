@@ -15,19 +15,19 @@ endif
 SRC := $(wildcard src/*.c)
 OBJ := $(patsubst src/%.c, obj/%.o, $(SRC))
 
-GREEN = \e[1m\e[32m
-RESET = \e[0m
+GREEN='\033[01;32m'
+RESET='\033[00m'
 
 MLX = ./mlx/libmlx.a
 
 all: $(BINARY)
 
 $(BINARY): $(LIBFT) $(MLX) $(OBJ)
-	@echo -e "$(GREEN)==> Making Cub3D$(RESET)"
+	@echo  "$(GREEN)==> Making Cub3D $(RESET)"
 	$(COMP) $(INCLUDES) $(OBJ) $(LIBFT) -o $(BINARY)
 
 $(LIBFT): $(LIBFT_OBJ)
-	@echo -e "$(GREEN)==> Making LIBFT$(RESET)"
+	@echo "$(GREEN)==> Making LIBFT$(RESET)"
 	ar rcs $(LIBFT) $(LIBFT_OBJ)
 
 libft/%.o: libft/%.c
@@ -47,7 +47,7 @@ runs: $(BINARY)
 
 $(MLX):
 	@echo -e "$(GREEN)==> Making MLX$(RESET)"
-	make -C ./mlx
+	@ make -C ./mlx
 
 norme:
 	#grep "printf" */*.[ch]
