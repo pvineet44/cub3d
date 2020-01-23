@@ -39,9 +39,17 @@ static void	create_map_helper(char *line, t_info *info, int x, int y)
 		info->map_started = 2;
 	}
 	else if (ft_isdigit(line[0]) && ft_isdigit(line[1]))
+	{
+		if (ft_isalpha(line[0]))
+			parsing_error(info, 'm');
 		info->map[x][y] = line[0] - '0';
+	}
 	else
+	{
+		if (ft_isalpha(line[0]))
+			parsing_error(info, 'm');
 		info->map[x][y] = ft_atoi(line);
+	}
 }
 
 void		create_map(t_info *info)
