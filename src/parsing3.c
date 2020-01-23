@@ -38,6 +38,8 @@ static void	create_map_helper(char *line, t_info *info, int x, int y)
 		check = 1;
 		info->map_started = 2;
 	}
+	else if (ft_isdigit(line[0]) && ft_isdigit(line[1]))
+        info->map[x][y] = line[0] - '0';
 	else
 		info->map[x][y] = ft_atoi(line);
 }
