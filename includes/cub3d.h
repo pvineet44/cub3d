@@ -259,6 +259,8 @@ float			maxf(float a, float b);
 void			int_to_char(int n, unsigned char *src);
 char			*skip_spaces(char *line, t_info *info);
 char			*skip_digits(char *line, t_info *info);
+t_list			*sort_sprites(t_list *sprites, int px, int py);
+float			sprite_distance(int px, int py, t_sprite *sprite);
 
 /*
 ** Debug functions

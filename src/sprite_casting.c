@@ -101,7 +101,7 @@ void		draw_sprites(t_game *game)
 	int			x;
 	int			y;
 
-	ptr = game->world->sprites;
+	ptr = sort_sprites(game->world->sprites, game->world->px, game->world->py);
 	while (ptr)
 	{
 		draw_sprites_while1(game, (sprite = ptr->content));
