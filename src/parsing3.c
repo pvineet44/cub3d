@@ -39,7 +39,7 @@ static void	create_map_helper(char *line, t_info *info, int x, int y)
 		info->map_started = 2;
 	}
 	else if (ft_isdigit(line[0]) && ft_isdigit(line[1]))
-        info->map[x][y] = line[0] - '0';
+		info->map[x][y] = line[0] - '0';
 	else
 		info->map[x][y] = ft_atoi(line);
 }
@@ -60,14 +60,13 @@ void		create_map(t_info *info)
 	while (y < info->map_height)
 	{
 		line = ptr->content;
-		x = 0;
-		while (x < info->map_width)
+		x = -1;
+		while (++x < info->map_width)
 		{
 			create_map_helper(line, info, x, y);
 			line++;
-			while(ft_isspace(line[0]))
+			while (ft_isspace(line[0]))
 				line++;
-			x++;
 		}
 		ptr = ptr->next;
 		y++;

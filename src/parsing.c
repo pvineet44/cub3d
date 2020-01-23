@@ -40,7 +40,11 @@ t_info	*parse(char *file)
 void	handle_line(char *line, t_info *info)
 {
 	if (*line == '\0')
+	{
+		if (info->map_started == 1)
+			parsing_error(info, 'm');
 		return ;
+	}
 	if (!ft_isdigit(*line) && info->map_started)
 		parsing_error(info, 'm');
 	if (ft_isdigit(*line))
@@ -65,17 +69,21 @@ void	parsing_error(t_info *info, char c)
 	write(1, "Error\n", 6);
 	if (c == 'a')
 		write(1, "Invalid args\n", 14);
-	if (c == 'm')
+	else if (c == 'c')
+		write(1, "Invalid color in ceil or floor\n", 32);
+	else if (c == 'm')
 		write(1, "Invalid map\n", 13);
-	if (c == 'f')
+	else if (c == 'f')
 		write(1, "Can't open file\n", 17);
-	if (c == 'i')
+	else if (c == 'i')
 		write(1, "Map missing in cub\n", 20);
-	if (c == 'p')
+	else if (c == 'p')
 		write(1, "Player missing in cub\n", 23);
-	if (c == 'r')
+	else if (c == 'r')
 		write(1, "Two player positions in cub\n", 29);
-	if (c == 't')
+	else if (c == 't')
 		write(1, "Problem in texture\n", 18);
+	else
+		write(1, "Error in cub3d\n", 16);
 	exit(0);
 }

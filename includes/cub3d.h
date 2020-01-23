@@ -257,6 +257,8 @@ int				max(int a, int b);
 float			minf(float a, float b);
 float			maxf(float a, float b);
 void			int_to_char(int n, unsigned char *src);
+char			*skip_spaces(char *line, t_info *info);
+char			*skip_digits(char *line, t_info *info);
 
 /*
 ** Debug functions

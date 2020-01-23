@@ -6,6 +6,6 @@ EA ./tests/maps/textures/sponge.xpm
 S ./tests/maps/textures/sponge.xpm
 F 220,100,0  
 C 225,30,0  
-1 1 1
-1 N 1
-1 1 1
+111
+1W1
+111

@@ -37,9 +37,9 @@ static void	init_world(t_world *res, t_info *info)
 	res->map = info->map;
 	res->mx = info->map_width;
 	res->my = info->map_height;
-	res->px = info->px;
-	res->py = info->py;
-	res->pz = 0;
+	res->px = info->px + 0.5;
+	res->py = info->py + 0.5;
+	res->pz = 10;
 	res->plane_x = (info->orientation == 'E'
 		|| info->orientation == 'W' ? 0.0 : 0.40);
 	res->plane_y = (info->orientation == 'E'

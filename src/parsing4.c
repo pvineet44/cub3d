@@ -35,7 +35,7 @@ int			calculate_length(char *str)
 
 	c = 0;
 	i = 0;
-	while(str && str[i])
+	while (str && str[i])
 	{
 		if (!ft_isspace(str[i]))
 			c++;

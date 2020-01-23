@@ -85,17 +85,17 @@ void		parse_color(char *line, t_info *info)
 	int				res[3];
 	int				i;
 
-	i = 0;
-	type = *line;
-	line += 2;
+	i = -1;
+	type = *line++;
+	line = skip_spaces(line, info);
 	res[0] = ft_atoi(line);
-	while (ft_isdigit(*line))
-		line++;
-	line += (*line == ',');
+	line = skip_digits(line, info);
+	line = skip_spaces(line, info);
 	res[1] = ft_atoi(line);
-	while (ft_isdigit(*line))
-		line++;
-	line += (*line == ',');
+	line = skip_digits(line, info);
+	line = skip_spaces(line, info);
+	if (*line == '\0')
+		parsing_error(info, 'c');
 	res[2] = ft_atoi(line);
 	while (++i < 3)
 		if (res[i] < 0 || res[i] > 255)
