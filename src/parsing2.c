@@ -6,7 +6,7 @@
 /*   By: vparekh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/19 13:06:52 by vparekh           #+#    #+#             */
-/*   Updated: 2020/01/21 18:52:12 by vparekh          ###   ########.fr       */
+/*   Updated: 2020/01/23 16:35:37 by vparekh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void		parse_color(char *line, t_info *info)
 	i = -1;
 	type = *line++;
 	line = skip_spaces(line, info);
-	res[0] = ft_atoi(line);
+	res[2] = ft_atoi(line);
 	line = skip_digits(line, info);
 	line = skip_spaces(line, info);
 	res[1] = ft_atoi(line);
@@ -96,7 +96,7 @@ void		parse_color(char *line, t_info *info)
 	line = skip_spaces(line, info);
 	if (*line == '\0')
 		parsing_error(info, 'c');
-	res[2] = ft_atoi(line);
+	res[0] = ft_atoi(line);
 	while (++i < 3)
 		if (res[i] < 0 || res[i] > 255)
 			parsing_error(info, 'a');
