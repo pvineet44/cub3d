@@ -108,7 +108,7 @@ function check()
 			printf "\033[110G[expected %d, but got %d]\033[0m\n" "$shoud_exit_with" "$signal"
 		fi
 		if [[ $flags == *"--save"* ]]; then
-			mv bitmap.bmp ./tests/outputs/$(echo "$file" | tr '/' '_' | sed 's/\._/.\//g')_$(python3 -c 'from time import time; print(int(round(time() * 1000)), end="");').bmp
+			mv screenshot.bmp ./tests/outputs/$(echo "$file" | tr '/' '_' | sed 's/\._/.\//g')_$(python3 -c 'from time import time; print(int(round(time() * 1000)), end="");').bmp
 		fi
 	done
 }

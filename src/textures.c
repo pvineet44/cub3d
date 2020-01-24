@@ -32,8 +32,8 @@ t_texture	*load_texture(void *mlx_ptr, char *filename)
 		return (NULL);
 	res->ptr = mlx_xpm_file_to_image(mlx_ptr, filename,
 			&(res->width), &(res->height));
-	if (!res->ptr)
-		return (res);
+	if (res->ptr == 0)
+		return (NULL);
 	config[0] = 32;
 	config[1] = res->width * 4;
 	config[2] = 0;

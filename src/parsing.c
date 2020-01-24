@@ -6,7 +6,7 @@
 /*   By: vparekh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/19 13:07:10 by vparekh           #+#    #+#             */
-/*   Updated: 2020/01/23 16:07:49 by vparekh          ###   ########.fr       */
+/*   Updated: 2020/01/19 13:07:11 by vparekh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,14 @@ t_info	*parse(char *file)
 
 void	handle_line(char *line, t_info *info)
 {
+	static int c;
+
 	if (*line == '\0')
 	{
+		if (c >= 1 && info->map_started)
+			parsing_error(info, 'x');
+		if (info->map_started)
+			c++;
 		return ;
 	}
 	if (!ft_isdigit(*line) && info->map_started)

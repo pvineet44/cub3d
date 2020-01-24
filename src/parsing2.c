@@ -6,7 +6,7 @@
 /*   By: vparekh <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/19 13:06:52 by vparekh           #+#    #+#             */
-/*   Updated: 2020/01/23 16:35:37 by vparekh          ###   ########.fr       */
+/*   Updated: 2020/01/21 18:52:12 by vparekh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ void		parse_resolution(char *line, t_info *info)
 {
 	if (info->height != 0 || info->width != 0)
 		parsing_error(info, 'a');
-	line += 2;
+	line++;
+	line = skip_spaces(line, info);
 	info->width = min(ft_atoi(line), 2560);
 	while (ft_isdigit(*line))
 		line++;
@@ -99,7 +100,7 @@ void		parse_color(char *line, t_info *info)
 	res[0] = ft_atoi(line);
 	while (++i < 3)
 		if (res[i] < 0 || res[i] > 255)
-			parsing_error(info, 'a');
+			parsing_error(info, 'c');
 	if (type == 'C')
 		set_color(info->ceil, (unsigned char)res[0], (unsigned char)res[1],
 		(unsigned char)res[2]);
